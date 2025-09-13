@@ -6,16 +6,42 @@ const products = [
   { id:'pf4', name:'Kriska Shock',        price:12999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-4.jpg', category:'perfumeria', subcat:'Kriska',    aromas:['Frutal'] },
   { id:'pf5', name:'Humor Própria',       price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-5.jpg', category:'perfumeria', subcat:'Humor',     aromas:['Frutal'] },
   { id:'pf8', name:'Luna Rubí',           price:14499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-8.jpg', category:'perfumeria', subcat:'Luna',      aromas:['Floral'] },
+ // --- Humor (nuevos productos) ---
+{ id:'hu1', name:'Humor Beijo',        price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-9.jpg',  category:'perfumeria', subcat:'Humor', aromas:['Frutal','Dulce'] },
+{ id:'hu2', name:'Humor Transforma',   price:12499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-10.jpg', category:'perfumeria', subcat:'Humor', aromas:['Floral','Amaderado'] },
+{ id:'hu3', name:'Humor Meu Primeiro', price:12999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-11.jpg', category:'perfumeria', subcat:'Humor', aromas:['Oriental'] },
+// --- Kriska (nuevos productos) ---
+{ id:'kr1', name:'Kriska Drama',    price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-12.jpg', category:'perfumeria', subcat:'Kriska', aromas:['Frutal','Intenso'] },
+{ id:'kr2', name:'Kriska Clásico',  price:11499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-13.jpg', category:'perfumeria', subcat:'Kriska', aromas:['Floral'] },
+{ id:'kr3', name:'Kriska Jeans',    price:10999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-14.jpg', category:'perfumeria', subcat:'Kriska', aromas:['Cítrico','Casual'] },
+// --- Luna (nuevos productos) ---
+{ id:'lu1', name:'Luna Radiante', price:13999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-15.jpg', category:'perfumeria', subcat:'Luna', aromas:['Floral','Frutal'] },
+{ id:'lu2', name:'Luna Actitud',  price:14499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-16.jpg', category:'perfumeria', subcat:'Luna', aromas:['Amaderado','Floral'] },
+{ id:'lu3', name:'Luna Intenso',  price:14999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-17.jpg', category:'perfumeria', subcat:'Luna', aromas:['Oriental','Intenso'] },
+
+
+
+
 
   // Masculina
   { id:'pm2', name:'Essencial Oud',       price:21999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-2.jpg', category:'perfumeria', subcat:'Essencial', aromas:['Amaderado'] },
-  { id:'pm3', name:'HOMEM Potence',       price:18999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-3.jpg', category:'perfumeria', subcat:'Otros',     aromas:['Especiado'] },
+  { id:'pm3', name:'HOMEM Potence',       price:18999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-3.jpg', category:'perfumeria', subcat:'Homem',     aromas:['Especiado'] },
   { id:'pm6', name:'Kaiak Urbe',          price:15999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-6.jpg', category:'perfumeria', subcat:'Kaiak',     aromas:['Acuático'] },
   { id:'pm7', name:'Kaiak Aventura',      price:15999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-7.jpg', category:'perfumeria', subcat:'Kaiak',     aromas:['Acuático'] },
   { id:'pm8', name:'Kaiak Oceano',        price:16999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-8.jpg', category:'perfumeria', subcat:'Kaiak',     aromas:['Acuático'] },
+{ id:'pe2', name:'Essencial Supreme Masculino',  price:23999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-9.jpg',  category:'perfumeria', subcat:'Essencial', aromas:['Amaderado','Especiado'] },
+{ id:'pe4', name:'Essencial Oud Masculino',      price:24999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-10.jpg', category:'perfumeria', subcat:'Essencial', aromas:['Amaderado'] },
+{ id:'pe5', name:'Essencial Exclusivo Masculino',price:22999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-11.jpg', category:'perfumeria', subcat:'Essencial', aromas:['Cítrico','Amaderado'] },
+// --- Homem (nuevos productos) ---
+{ id:'hm1', name:'Homem Neo',       price:25999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-12.jpg', category:'perfumeria', subcat:'Homem', aromas:['Amaderado','Oriental'] },
+{ id:'hm2', name:'Homem Coragio',   price:23999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-4.jpg',  category:'perfumeria', subcat:'Homem', aromas:['Cítrico','Amaderado'] },
+{ id:'hm3', name:'Homem Intenso',   price:24999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-5.jpg',  category:'perfumeria', subcat:'Homem', aromas:['Especiado','Amaderado'] },
+
+
+
 ];
 
-const SUBCAT_ORDER = ['Kaiak','Essencial','Kriska','Luna','Humor','Otros'];
+const SUBCAT_ORDER = ['Kaiak','Essencial','Kriska','Luna','Humor','Homem'];
 const currentFilters = { subcat:'*', aroma:'*' };
 
 /* CUIDADOS */
@@ -229,7 +255,7 @@ document.addEventListener('click', e=>{
 document.getElementById('btnClearCart')?.addEventListener('click', ()=>{ cart=[]; updateCart(); });
 
 /* ====== CHECKOUT POR WHATSAPP ====== */
-const WHATSAPP_PHONE = '54911XXXXXXXX'; // <-- reemplazá por tu número sin el + (ej: 54911...)
+const WHATSAPP_PHONE = '5491151039074'; // <--- tu número
 
 // helpers checkout
 const formatAR = n => "$ " + Number(n).toLocaleString('es-AR');
