@@ -1,0 +1,26 @@
+@use "sass:color";
+
+/* Base de botón reutilizable */
+%btn-base{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:$btn-h; padding:0 1rem; border-radius:.5rem; cursor:pointer;
+  border:1px solid transparent; text-decoration:none;
+  @include smooth(background-color, .2s);
+}
+
+.btn-brand{
+  @extend %btn-base;
+  background:$brand-1; color:#fff;
+  &:hover{ background: color.scale($brand-1, $lightness: -8%); }
+  &:focus-visible{ @include focus-ring($brand-1); }
+}
+
+.btn-outline-brand{
+  @extend %btn-base;
+  background:transparent; color:$brand-1; border-color:$brand-1;
+  &:hover{
+    background:$brand-3; color: color.scale($brand-1, $lightness: -10%);
+    border-color: color.scale($brand-1, $lightness: -10%);
+  }
+  &:focus-visible{ @include focus-ring($brand-1); }
+}

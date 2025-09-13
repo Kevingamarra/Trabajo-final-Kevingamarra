@@ -1,0 +1,17 @@
+.card.product{
+  scroll-snap-align:start; height:100%;
+  display:flex; flex-direction:column; border-radius:$radius-xl; overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  animation: card-pop .35s ease both;
+
+  .img-wrap{ width:100%; background:#fff; @include aspect(3, 4); }
+  .card-body{ padding:.75rem .9rem; background:#0e0e10; color:#fff; }
+  .title{ font-size:1rem; line-height:1.2; }
+  .price{ color:$brand-3; }
+
+  &:hover{
+    transform: translateY(-2px);
+    box-shadow:0 6px 18px rgba(0,0,0,.14);
+    .title{ text-decoration: underline; }
+  }
+}

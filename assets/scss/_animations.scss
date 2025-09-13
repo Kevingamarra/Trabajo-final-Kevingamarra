@@ -1,0 +1,16 @@
+/* Vaivén horizontal para logo + h1 */
+@keyframes wiggle-x {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+}
+.animate-wiggle-x {
+  animation: wiggle-x 2s ease-in-out infinite;
+}
+
+/* Entrada de cards */
+@keyframes card-pop {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}

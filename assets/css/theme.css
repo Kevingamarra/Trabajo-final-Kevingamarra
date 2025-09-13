@@ -1,0 +1,300 @@
+@charset "UTF-8";
+body {
+  font-family: "Natura Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: #fffeff;
+  color: #222;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Skip link */
+.visually-hidden-focusable {
+  position: absolute;
+  left: -9999px;
+}
+.visually-hidden-focusable:focus {
+  left: 0;
+  z-index: 1000;
+  outline: 3px solid rgba(188, 54, 98, 0.4);
+  outline-offset: 2px;
+}
+
+/* WOW helpers */
+.wow {
+  will-change: transform, opacity;
+}
+
+/* Imagen de Medios de pago */
+.pay-logos {
+  max-width: 600px;
+}
+
+/* Vaivén horizontal para logo + h1 */
+@keyframes wiggle-x {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+}
+.animate-wiggle-x {
+  animation: wiggle-x 2s ease-in-out infinite;
+}
+
+/* Entrada de cards */
+@keyframes card-pop {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.navbar {
+  background: #d71d5c;
+}
+.navbar .navbar-brand {
+  color: #fff;
+  font-weight: 700;
+}
+.navbar .navbar-brand img {
+  display: block;
+}
+.navbar .nav-link {
+  color: #fff;
+  transition: color 0.25s ease;
+}
+.navbar .nav-link:hover {
+  color: #fed0e3;
+}
+.navbar .nav-link.active {
+  color: #fed0e3;
+}
+
+/* Base de botón reutilizable */
+.btn-outline-brand, .btn-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-brand {
+  background: #d71d5c;
+  color: #fff;
+}
+.btn-brand:hover {
+  background: rgb(197.8, 26.68, 84.64);
+}
+.btn-brand:focus-visible {
+  outline: 3px solid rgba(215, 29, 92, 0.4);
+  outline-offset: 2px;
+}
+
+.btn-outline-brand {
+  background: transparent;
+  color: #d71d5c;
+  border-color: #d71d5c;
+}
+.btn-outline-brand:hover {
+  background: #fed0e3;
+  color: rgb(193.5, 26.1, 82.8);
+  border-color: rgb(193.5, 26.1, 82.8);
+}
+.btn-outline-brand:focus-visible {
+  outline: 3px solid rgba(215, 29, 92, 0.4);
+  outline-offset: 2px;
+}
+
+.hero-video {
+  background: linear-gradient(180deg, #fed0e3, transparent 35%);
+  position: relative;
+}
+.hero-video .video-wrap {
+  width: 100%;
+  aspect-ratio: 1.7777777778;
+  position: relative;
+  overflow: hidden;
+}
+.hero-video .video-wrap > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+.carousel-row .carousel-btn {
+  border: 1px solid #d71d5c;
+  background: #fff;
+  color: #d71d5c;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-content: center;
+  transition: transform 0.2s ease;
+}
+.carousel-row .carousel-btn:disabled {
+  opacity: 0.35;
+}
+.carousel-row .carousel-btn:active {
+  transform: scale(0.96);
+}
+
+.products-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 280px);
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding: 0.25rem;
+}
+@media (max-width: 575.98px) {
+  .products-row {
+    grid-auto-columns: 78vw;
+    gap: 0.75rem;
+  }
+}
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .products-row {
+    grid-auto-columns: 44vw;
+  }
+}
+@media (min-width: 992px) {
+  .products-row {
+    grid-auto-columns: minmax(240px, 300px);
+  }
+}
+
+.card.product {
+  scroll-snap-align: start;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  animation: card-pop 0.35s ease both;
+}
+.card.product .img-wrap {
+  width: 100%;
+  background: #fff;
+  aspect-ratio: 0.75;
+  position: relative;
+  overflow: hidden;
+}
+.card.product .img-wrap > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card.product .card-body {
+  padding: 0.75rem 0.9rem;
+  background: #0e0e10;
+  color: #fff;
+}
+.card.product .title {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.card.product .price {
+  color: #fed0e3;
+}
+.card.product:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+}
+.card.product:hover .title {
+  text-decoration: underline;
+}
+
+.badge-aroma, .badge-subcat {
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  border: 1px solid transparent;
+  display: inline-block;
+}
+
+.badge-subcat {
+  background: #fed0e3;
+  color: #bc3662;
+  border-color: #e085a4;
+}
+
+.badge-aroma {
+  background: #fff;
+  color: #d71d5c;
+  border-color: #d71d5c;
+}
+
+.info-section {
+  background: #fed0e3;
+}
+.info-section .section-title {
+  color: #bc3662;
+}
+.info-section h5 {
+  color: #d71d5c;
+  font-weight: 700;
+}
+.info-section .pay-logos {
+  display: inline-block;
+}
+
+.whatsapp-float {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.whatsapp-float:hover {
+  background: #1ebe5d;
+}
+.whatsapp-float:focus-visible {
+  outline: 3px solid rgba(37, 211, 102, 0.4);
+  outline-offset: 2px;
+}
+
+/*# sourceMappingURL=theme.css.map */

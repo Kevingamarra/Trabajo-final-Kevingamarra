@@ -1,0 +1,14 @@
+.navbar{
+  background: $brand-1;
+
+  .navbar-brand{
+    color: #fff; font-weight: 700;
+    img { display:block; }
+  }
+  .nav-link{
+    color: #fff;
+    @include smooth(color);
+    &:hover{ color: $brand-3; }
+    &.active{ color: $brand-3; }
+  }
+}

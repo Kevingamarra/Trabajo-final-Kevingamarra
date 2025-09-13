@@ -1,0 +1,19 @@
+@use "sass:color";
+
+body{
+  font-family: $font-main;
+  background: $brand-5; color: $text; margin: 0;
+}
+a{ color: inherit; text-decoration: none; }
+
+/* Skip link */
+.visually-hidden-focusable {
+  position: absolute; left: -9999px;
+  &:focus { left: 0; z-index: 1000; @include focus-ring($brand-2); }
+}
+
+/* WOW helpers */
+.wow { will-change: transform, opacity; }
+
+/* Imagen de Medios de pago */
+.pay-logos{ max-width: 600px; }

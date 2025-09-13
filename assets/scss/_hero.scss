@@ -1,0 +1,6 @@
+.hero-video{
+  background: linear-gradient(180deg, $brand-3, transparent 35%);
+  position: relative;
+
+  .video-wrap{ width:100%; @include aspect(16, 9); }
+}

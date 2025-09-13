@@ -1,0 +1,11 @@
+.whatsapp-float{
+  position:fixed; right:18px; bottom:18px;
+  width:56px; height:56px; border-radius:50%;
+  background:#25D366; color:#fff;
+  display:grid; place-items:center;
+  box-shadow:0 8px 18px rgba(0,0,0,.2);
+  z-index:1100; text-decoration:none;
+  @include smooth(background-color, .15s);
+  &:hover{ background:#1ebe5d; }
+  &:focus-visible{ @include focus-ring(#25D366); }
+}
