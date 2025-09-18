@@ -28,20 +28,27 @@ a {
   will-change: transform, opacity;
 }
 
+/* Ajuste compactado de Medios de pago */
+.medios-de-pago {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
 
-/* Medios de pago más compacto */
-.section-title {
+.medios-de-pago .section-title {
   margin-bottom: 0.25rem !important;
 }
 
-.pay-logos {
+.medios-de-pago .pay-logos {
   margin-top: 0 !important;
   max-width: 600px;
 }
 
-.text-center p.small {
+.medios-de-pago p {
   margin-top: 0.25rem !important;
+  margin-bottom: 0 !important;
 }
+
+
 
 
 
