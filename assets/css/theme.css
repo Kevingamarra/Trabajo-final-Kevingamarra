@@ -33,6 +33,17 @@ a {
   max-width: 600px;
 }
 
+/* Ajuste de separación en la sección Medios de pago */
+.section-title {
+  margin-bottom: 0.5rem; /* reduce espacio debajo del título */
+}
+
+.pay-logos {
+  margin-top: 0; /* elimina espacio extra arriba de la imagen */
+}
+
+
+
 /* Vaivén horizontal para logo + h1 */
 @keyframes wiggle-x {
   0%, 100% {
