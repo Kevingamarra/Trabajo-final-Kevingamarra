@@ -29,24 +29,18 @@ a {
 }
 
 
-/* Medios de pago: compactar vertical */
-.payments-block { 
-  margin-top: 1rem !important;      
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+/* Medios de pago más compacto */
+.section-title {
+  margin-bottom: 0.25rem !important;
 }
 
-.payments-block .section-title { 
-  margin-bottom: 0.25rem !important; /* título más cerca de la imagen */
+.pay-logos {
+  margin-top: 0 !important;
+  max-width: 600px;
 }
 
-.payments-block .pay-logos {
-  margin-top: 0 !important;          /* sin espacio extra arriba */
-  max-width: 600px;                  
-}
-
-.payments-block p.small {
-  margin-top: 0.5rem !important;      /* texto bajo la imagen*/
+.text-center p.small {
+  margin-top: 0.25rem !important;
 }
 
 
