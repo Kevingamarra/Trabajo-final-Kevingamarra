@@ -28,18 +28,29 @@ a {
   will-change: transform, opacity;
 }
 
-/* Imagen de Medios de pago */
-.pay-logos {
+/* Ajuste compactado de Medios de pago */
+.medios-de-pago {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.medios-de-pago .section-title {
+  margin-bottom: 0.25rem !important;
+}
+
+.medios-de-pago .pay-logos {
+  margin-top: 0 !important;
   max-width: 600px;
 }
 
-/* Foco accesible */
-:focus-visible {
-  outline: 3px solid rgba(215, 29, 92, 0.6);
-  outline-offset: 2px;
-  border-radius: 6px;
-  transition: outline-color 0.15s ease, outline-offset 0.15s ease;
+.medios-de-pago p {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0 !important;
 }
+
+
+
+
 
 /* Vaivén horizontal para logo + h1 */
 @keyframes wiggle-x {
@@ -71,42 +82,6 @@ a {
     opacity: 1;
   }
 }
-/* Reduce motion */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-/* Foco accesible */
-:focus-visible {
-  outline: 3px solid rgba(215, 29, 92, 0.6);
-  outline-offset: 2px;
-  border-radius: 6px;
-  transition: outline-color 0.15s ease, outline-offset 0.15s ease;
-}
-
-/* Animación propia: fadeUp */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.fade-up {
-  animation: fadeUp 0.48s ease both;
-}
-
-/* Card con animación */
-.card-animated {
-  animation: fadeUp 0.48s ease both;
-}
-
 .navbar {
   background: #d71d5c;
 }
@@ -167,22 +142,6 @@ a {
 .btn-outline-brand:focus-visible {
   outline: 3px solid rgba(215, 29, 92, 0.4);
   outline-offset: 2px;
-}
-
-/* Micro-interacciones en botón de marca */
-.btn-brand {
-  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
-  will-change: transform;
-}
-.btn-brand:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-.btn-brand:active {
-  transform: translateY(0);
-  filter: brightness(0.95);
-  box-shadow: none;
 }
 
 .hero-video {
@@ -297,15 +256,6 @@ a {
 }
 .card.product:hover .title {
   text-decoration: underline;
-}
-
-/* Cards de producto: elevación sutil al hover */
-.card.product {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.card.product:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
 .badge-aroma, .badge-subcat {

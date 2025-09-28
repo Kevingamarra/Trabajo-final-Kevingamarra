@@ -14,30 +14,3 @@
   from { transform: translateY(8px); opacity: 0; }
   to   { transform: translateY(0);   opacity: 1; }
 }
-
-/* Reduce motion */
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}
-
-/* Foco accesible */
-:focus-visible {
-  outline: 3px solid rgba(215, 29, 92, .6);
-  outline-offset: 2px;
-  border-radius: 6px;
-  transition: outline-color .15s ease, outline-offset .15s ease;
-}
-
-/* Animación propia: fadeUp */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fade-up {
-  animation: fadeUp .48s ease both;
-}
-
-/* Card con animación */
-.card-animated {
-  animation: fadeUp .48s ease both;
-}
