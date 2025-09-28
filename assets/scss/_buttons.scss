@@ -24,3 +24,19 @@
   }
   &:focus-visible{ @include focus-ring($brand-1); }
 }
+
+/* Micro-interacciones en botón de marca */
+.btn-brand {
+  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+  will-change: transform;
+  &:hover { 
+    transform: translateY(-1px); 
+    filter: brightness(1.05); 
+    box-shadow: 0 8px 20px rgba(0,0,0,.10); 
+  }
+  &:active { 
+    transform: translateY(0); 
+    filter: brightness(.95); 
+    box-shadow: none; 
+  }
+}

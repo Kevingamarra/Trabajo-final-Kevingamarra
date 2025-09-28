@@ -5,7 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pura Belleza - Cosméticos</title>
 
-  <!-- Bootstrap CSS (con SRI) -->
+  <!-- SEO básico -->
+  <meta name="description" content="Pura Belleza — Cosméticos, perfumería, maquillaje y regalos. Belleza que conecta.">
+  <meta name="keywords" content="cosmética, maquillaje, perfumes, natura, pura belleza, regalos, cuidados diarios">
+  <meta name="author" content="Pura Belleza">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://naturaconsultoriaok.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="Pura Belleza">
+  <meta property="og:title" content="Pura Belleza — Cosméticos y Perfumería">
+  <meta property="og:description" content="Descubrí perfumes, maquillaje, regalos y cuidados diarios.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://naturaconsultoriaok.com/">
+  <meta property="og:image" content="https://naturaconsultoriaok.com/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pura Belleza — Cosméticos y Perfumería">
+  <meta name="twitter:description" content="Tu mundo de cosmética y perfumería.">
+  <meta name="twitter:image" content="https://naturaconsultoriaok.com/assets/img/og-cover.jpg">
+
+  <!-- Color navegador -->
+  <meta name="theme-color" content="#d71d5c">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+  <!-- Datos estructurados -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Pura Belleza",
+    "url": "https://naturaconsultoriaok.com/",
+    "logo": "https://naturaconsultoriaok.com/assets/img/logo.png"
+  }
+  </script>
+
+  <!-- Bootstrap CSS -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     rel="stylesheet"
@@ -17,14 +58,14 @@
   <!-- Tipografía Natura -->
   <link href="https://cdn.jsdelivr.net/npm/@naturacosmeticos/natds-themes@latest/dist/assets/natura_fonts.css" rel="stylesheet">
 
-  <!-- Animate.css (para WOW.js) -->
+  <!-- Animate.css (si usás WOW) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4/animate.min.css">
 
-  <!-- Estilos del proyecto -->
+  <!-- Estilos -->
   <link rel="stylesheet" href="assets/css/theme.css">
 </head>
 <body>
-  <!-- Skip link accesible -->
+  <!-- Skip link -->
   <a class="visually-hidden-focusable position-absolute top-0 start-0 m-2 p-2 bg-white rounded shadow-sm" href="#inicio">
     Saltar al contenido
   </a>
@@ -32,7 +73,7 @@
   <!-- NAVBAR -->
   <header class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center animate-wiggle-x" href="#inicio" aria-label="Ir al inicio">
+      <a class="navbar-brand d-flex align-items-center" href="#inicio" aria-label="Ir al inicio">
         <img src="assets/img/logo.png" alt="Pura Belleza" height="40" class="me-2">
         Pura Belleza
       </a>
@@ -51,13 +92,17 @@
 
         <!-- Buscador -->
         <form class="d-flex ms-lg-3 mt-3 mt-lg-0" role="search" aria-label="Buscar productos">
-          <input class="form-control me-2" id="searchProducts" type="search" placeholder="Buscar productos...">
-          <button class="btn btn-outline-brand" type="submit" aria-label="Buscar"><i class="bi bi-search"></i></button>
+          <input class="form-control me-2" id="searchProducts" type="search" placeholder="Buscar productos..." aria-label="Buscar productos">
+          <button class="btn btn-outline-brand" type="submit" aria-label="Buscar">
+            <i class="bi bi-search" aria-hidden="true"></i>
+          </button>
         </form>
 
         <!-- Carrito -->
-        <button class="btn btn-brand ms-2 ms-lg-3 mt-3 mt-lg-0" data-bs-toggle="offcanvas" data-bs-target="#carrito" aria-controls="carrito" aria-label="Abrir carrito">
-          <i class="bi bi-cart"></i>
+        <button class="btn btn-brand ms-2 ms-lg-3 mt-3 mt-lg-0"
+                data-bs-toggle="offcanvas" data-bs-target="#carrito"
+                aria-controls="carrito" aria-label="Abrir carrito">
+          <i class="bi bi-cart" aria-hidden="true"></i>
           <span id="cartBadge" class="badge bg-light text-dark rounded-pill ms-1">0</span>
         </button>
       </div>
@@ -65,7 +110,7 @@
   </header>
 
   <main class="mt-5 pt-4" id="inicio">
-    <!-- HERO con video -->
+    <!-- HERO video -->
     <section class="hero-video position-relative mb-4">
       <div class="container-fluid p-0">
         <div class="video-wrap">
@@ -77,132 +122,140 @@
       </div>
     </section>
 
-<!-- Texto debajo del video -->
-<section class="text-center py-4 bg-light">
-  <div class="container">
-    <h1 class="fw-semibold animate-wiggle-x wow animate__animated animate__fadeInDown"
-        data-wow-duration="800ms" data-wow-delay="120ms">
-      Pura Belleza
-    </h1>
-    <p class="lead mb-0 wow animate__animated animate__fadeIn"
-       data-wow-duration="800ms" data-wow-delay="320ms">
-      Tu mundo de cosmética y perfumería
-    </p>
-  </div>
-</section>
-
+    <!-- Texto debajo -->
+    <section class="text-center py-4 bg-light">
+      <div class="container">
+        <h1 class="fw-semibold fade-up">Pura Belleza</h1>
+        <p class="lead mb-0 fade-up" style="animation-delay:.06s">Tu mundo de cosmética y perfumería</p>
+      </div>
+    </section>
 
     <!-- PERFUMERÍA -->
     <section id="perfumeria" class="container py-5">
-      <h2 class="section-title wow animate__animated animate__fadeInUp" data-wow-duration="700ms">Perfumería</h2>
+      <h2 class="section-title fade-up">Perfumería</h2>
 
-      <!-- Filtros por subcategoría -->
-      <div class="d-flex flex-wrap gap-2 mb-3">
-        <button class="btn btn-outline-brand btn-sm active" data-subcat="*">Todas</button>
-        <button class="btn btn-outline-brand btn-sm" data-subcat="Kaiak">Kaiak</button>
-        <button class="btn btn-outline-brand btn-sm" data-subcat="Essencial">Essencial</button>
-        <button class="btn btn-outline-brand btn-sm" data-subcat="Kriska">Kriska</button>
-        <button class="btn btn-outline-brand btn-sm" data-subcat="Luna">Luna</button>
-        <button class="btn btn-outline-brand btn-sm" data-subcat="Humor">Humor</button>
-        <button class="btn btn-outline-brand btn-sm" data-subcat="Otros">Otros</button>
+      <!-- Filtros -->
+      <div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Filtrar por subcategoría">
+        <button class="btn btn-outline-brand btn-sm active" data-subcat="*" aria-pressed="true">Todas</button>
+        <button class="btn btn-outline-brand btn-sm" data-subcat="Kaiak" aria-pressed="false">Kaiak</button>
+        <button class="btn btn-outline-brand btn-sm" data-subcat="Essencial" aria-pressed="false">Essencial</button>
+        <button class="btn btn-outline-brand btn-sm" data-subcat="Kriska" aria-pressed="false">Kriska</button>
+        <button class="btn btn-outline-brand btn-sm" data-subcat="Luna" aria-pressed="false">Luna</button>
+        <button class="btn btn-outline-brand btn-sm" data-subcat="Humor" aria-pressed="false">Humor</button>
+        <button class="btn btn-outline-brand btn-sm" data-subcat="Homem" aria-pressed="false">Homem</button>
       </div>
 
       <!-- Filtro aroma -->
       <div class="dropdown mb-4" id="aromaMenu">
-        <button class="btn btn-outline-brand btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-outline-brand btn-sm dropdown-toggle"
+                type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                aria-haspopup="true" aria-controls="menuAroma">
           Aroma
         </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" data-aroma="*">Todos</a></li>
-          <li><a class="dropdown-item" href="#" data-aroma="Acuático">Acuático</a></li>
-          <li><a class="dropdown-item" href="#" data-aroma="Floral">Floral</a></li>
-          <li><a class="dropdown-item" href="#" data-aroma="Amaderado">Amaderado</a></li>
-          <li><a class="dropdown-item" href="#" data-aroma="Frutal">Frutal</a></li>
-          <li><a class="dropdown-item" href="#" data-aroma="Especiado">Especiado</a></li>
+        <ul id="menuAroma" class="dropdown-menu" role="menu" aria-label="Elegir aroma">
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="*">Todos</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Acuático">Acuático</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Floral">Floral</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Amaderado">Amaderado</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Frutal">Frutal</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Especiado">Especiado</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Oriental">Oriental</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Dulce">Dulce</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Intenso">Intenso</a></li>
+          <li role="none"><a class="dropdown-item" role="menuitem" href="#" data-aroma="Cítrico">Cítrico</a></li>
         </ul>
       </div>
 
-      <!-- Aca el JS inyecta contenido -->
-      <div id="perfumeria-groups"></div>
+      <!-- Productos dinámicos (inyecta app.js) -->
+      <div id="perfumeria-groups" aria-live="polite"></div>
     </section>
 
-    <!-- CUIDADOS DIARIOS -->
+    <!-- CUIDADOS -->
     <section id="cuidados" class="container py-5">
-      <h2 class="section-title wow animate__animated animate__fadeInUp" data-wow-duration="700ms" data-wow-delay="60ms">Cuidados diarios</h2>
+      <h2 class="section-title fade-up">Cuidados diarios</h2>
+      <!-- Estructura tipo carrusel por filas -->
       <div class="carousel-row">
-        <button class="carousel-btn prev" data-target="row-cuidados" aria-label="Anterior cuidados"><i class="bi bi-chevron-left"></i></button>
+        <button class="carousel-btn prev" data-target="row-cuidados" aria-label="Anterior cuidados">
+          <i class="bi bi-chevron-left" aria-hidden="true"></i>
+        </button>
         <div class="products-row" id="row-cuidados"></div>
-        <button class="carousel-btn next" data-target="row-cuidados" aria-label="Siguiente cuidados"><i class="bi bi-chevron-right"></i></button>
+        <button class="carousel-btn next" data-target="row-cuidados" aria-label="Siguiente cuidados">
+          <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>
     </section>
 
     <!-- MAQUILLAJE -->
     <section id="maquillaje" class="container py-5">
-      <h2 class="section-title wow animate__animated animate__fadeInUp" data-wow-duration="700ms" data-wow-delay="60ms">Maquillaje</h2>
+      <h2 class="section-title fade-up">Maquillaje</h2>
       <div class="carousel-row">
-        <button class="carousel-btn prev" data-target="row-maquillaje" aria-label="Anterior maquillaje"><i class="bi bi-chevron-left"></i></button>
+        <button class="carousel-btn prev" data-target="row-maquillaje" aria-label="Anterior maquillaje">
+          <i class="bi bi-chevron-left" aria-hidden="true"></i>
+        </button>
         <div class="products-row" id="row-maquillaje"></div>
-        <button class="carousel-btn next" data-target="row-maquillaje" aria-label="Siguiente maquillaje"><i class="bi bi-chevron-right"></i></button>
+        <button class="carousel-btn next" data-target="row-maquillaje" aria-label="Siguiente maquillaje">
+          <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>
     </section>
 
     <!-- REGALOS -->
     <section id="regalos" class="container py-5">
-      <h2 class="section-title wow animate__animated animate__fadeInUp" data-wow-duration="700ms" data-wow-delay="60ms">Regalos</h2>
+      <h2 class="section-title fade-up">Regalos</h2>
       <div class="carousel-row">
-        <button class="carousel-btn prev" data-target="row-regalos" aria-label="Anterior regalos"><i class="bi bi-chevron-left"></i></button>
+        <button class="carousel-btn prev" data-target="row-regalos" aria-label="Anterior regalos">
+          <i class="bi bi-chevron-left" aria-hidden="true"></i>
+        </button>
         <div class="products-row" id="row-regalos"></div>
-        <button class="carousel-btn next" data-target="row-regalos" aria-label="Siguiente regalos"><i class="bi bi-chevron-right"></i></button>
+        <button class="carousel-btn next" data-target="row-regalos" aria-label="Siguiente regalos">
+          <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>
     </section>
   </main>
 
   <!-- INFO / AYUDA / SOPORTE -->
-<section class="container-fluid py-5 info-section border-top">
-  <div class="container">
-    <div class="row g-4">
-      <!-- Izquierda: Encontrá Natura -->
-      <div class="col-12 col-lg-6 text-lg-start">
-        <h2 class="section-title mb-3 wow animate__animated animate__fadeInUp" data-wow-duration="700ms">Encontrá Natura</h2>
-        <p class="mb-3 wow animate__animated animate__fadeIn" data-wow-duration="800ms" data-wow-delay="120ms">
-          Podés comprar con Consultoras de Belleza, en Tiendas, en el sitio naturacosmeticos.com.ar,
-          solicitar regalos corporativos o usar la app.
-        </p>
-        <h3 class="h5 mb-2 wow animate__animated animate__fadeInUp" data-wow-duration="700ms">Alertas y retiro de productos</h3>
-        <p class="mb-0 wow animate__animated animate__fadeIn" data-wow-duration="800ms" data-wow-delay="120ms">
-          Al día de la última comunicación pública, no hay productos bajo procesos de Alerta y Retiro.
-        </p>
+  <section class="container-fluid py-5 info-section border-top">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Izquierda -->
+        <div class="col-12 col-lg-6 text-lg-start">
+          <h2 class="section-title fade-up">Encontrá Natura</h2>
+          <p class="mb-3 fade-up" style="animation-delay:.06s">
+            Podés comprar con Consultoras de Belleza, en Tiendas, en el sitio naturacosmeticos.com.ar,
+            solicitar regalos corporativos o usar la app.
+          </p>
+          <h3 class="h5 fade-up" style="animation-delay:.12s">Alertas y retiro de productos</h3>
+          <p class="mb-0 fade-up" style="animation-delay:.18s">
+            Al día de la última comunicación pública, no hay productos bajo procesos de Alerta y Retiro.
+          </p>
+        </div>
+
+        <!-- Derecha -->
+        <div class="col-12 col-lg-6 text-lg-end">
+          <h2 class="section-title fade-up">Soporte</h2>
+          <h3 class="h5 fade-up" style="animation-delay:.06s">Políticas de privacidad</h3>
+          <p class="mb-3 fade-up" style="animation-delay:.12s">
+            Natura &amp;Co informa cómo recopila, usa y protege datos personales; el aviso y la política pueden actualizarse periódicamente.
+          </p>
+          <h3 class="h5 fade-up" style="animation-delay:.18s">Política de cookies</h3>
+          <p class="mb-0 fade-up" style="animation-delay:.24s">
+            Se describen categorías de cookies y tecnologías similares; cuando son datos personales se tratan conforme la política de privacidad.
+          </p>
+        </div>
       </div>
 
-      <!-- Derecha: Soporte -->
-      <div class="col-12 col-lg-6 text-lg-end">
-        <h2 class="section-title mb-3 wow animate__animated animate__fadeInUp" data-wow-duration="700ms">Soporte</h2>
-        <h3 class="h5 mb-2 wow animate__animated animate__fadeInUp" data-wow-duration="700ms">Políticas de privacidad</h3>
-        <p class="mb-3 wow animate__animated animate__fadeIn" data-wow-duration="800ms" data-wow-delay="120ms">
-          Natura &amp;Co informa cómo recopila, usa y protege datos personales; el aviso y la política pueden actualizarse periódicamente.
-        </p>
-        <h3 class="h5 mb-2 wow animate__animated animate__fadeInUp" data-wow-duration="700ms">Política de cookies</h3>
-        <p class="mb-0 wow animate__animated animate__fadeIn" data-wow-duration="800ms" data-wow-delay="120ms">
-          Se describen categorías de cookies y tecnologías similares; cuando son datos personales se tratan conforme la política de privacidad.
+      <!-- Medios de pago -->
+      <div class="text-center medios-de-pago mt-5">
+        <h2 class="section-title fade-up">Medios de pago</h2>
+        <img src="assets/img/medios-de-pago.png" alt="Medios de pago aceptados"
+             class="img-fluid pay-logos fade-up" style="animation-delay:.06s">
+        <p class="small text-muted fade-up" style="animation-delay:.12s">
+          Aceptamos tarjetas de crédito, débito y medios electrónicos a través de Mercado Pago.
         </p>
       </div>
     </div>
-
-    <!-- Medios de pago -->
-    <div class="text-center medios-de-pago">
-      <h2 class="section-title wow animate__animated animate__fadeInUp" data-wow-duration="700ms">Medios de pago</h2>
-      <img src="assets/img/medios-de-pago.png" alt="Medios de pago aceptados"
-           class="img-fluid pay-logos wow animate__animated animate__zoomIn"
-           data-wow-duration="800ms" data-wow-offset="100">
-      <p class="small text-muted wow animate__animated animate__fadeIn"
-         data-wow-duration="800ms" data-wow-delay="120ms">
-        Aceptamos tarjetas de crédito, débito y medios electrónicos a través de Mercado Pago.
-      </p>
-    </div>
-  </div>           
-
-
-
+  </section>
 
   <!-- OFFCANVAS CARRITO -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="carrito" aria-labelledby="carritoLabel">
@@ -220,12 +273,12 @@
       <!-- Datos del cliente -->
       <div class="mt-3">
         <label class="form-label small mb-1" for="clienteNombre">Nombre</label>
-        <input id="clienteNombre" class="form-control" placeholder="Tu nombre" required>
+        <input id="clienteNombre" class="form-control" placeholder="Tu nombre" required aria-required="true">
       </div>
 
       <div class="mt-3">
-        <label class="form-label small mb-1">Método de envío</label>
-        <select id="metodoEnvio" class="form-select">
+        <label class="form-label small mb-1" for="metodoEnvio">Método de envío</label>
+        <select id="metodoEnvio" class="form-select" aria-label="Elegir método de envío">
           <option value="retiro">Retiro en domicilio del vendedor</option>
           <option value="andreani">Envío a domicilio (Andreani)</option>
         </select>
@@ -258,30 +311,30 @@
       </div>
 
       <div class="mt-3 d-grid gap-2">
-        <button id="btnCheckout" class="btn btn-brand">Finalizar compra</button>
-        <button id="btnClearCart" class="btn btn-outline-secondary">Vaciar carrito</button>
+        <button id="btnCheckout" class="btn btn-brand" aria-label="Finalizar compra">Finalizar compra</button>
+        <button id="btnClearCart" class="btn btn-outline-secondary" aria-label="Vaciar carrito">Vaciar carrito</button>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER SIMPLE -->
+  <!-- FOOTER -->
   <footer class="text-center py-4 bg-light mt-0">
     <p class="mb-0">© 2025 Pura Belleza. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- WHATSAPP FLOAT -->
+  <!-- WhatsApp -->
   <a class="whatsapp-float" href="https://wa.me/message/7RVH5VNLVO7GP1" target="_blank" rel="noopener" aria-label="WhatsApp Pura Belleza">
-    <i class="bi bi-whatsapp fs-3"></i>
+    <i class="bi bi-whatsapp fs-3" aria-hidden="true"></i>
   </a>
 
-  <!-- Bootstrap JS (con SRI) -->
+  <!-- Bootstrap JS -->
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"
   ></script>
 
-  <!-- WOW.js (respeta prefers-reduced-motion) -->
+  <!-- WOW.js (si usás animate.css) -->
   <script src="https://cdn.jsdelivr.net/npm/wowjs@1/dist/wow.min.js"></script>
   <script>
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -1,12 +1,19 @@
-@import "variables";
-@import "mixins";
-@import "utilities";
-@import "animations";
-@import "navbar";
-@import "buttons";
-@import "hero";
-@import "carousel";
-@import "cards";
-@import "badges";
-@import "info";
-@import "whatsapp";
+@charset "UTF-8";
+
+// Importar módulo math de Sass
+@use "sass:math";
+
+// Importar parciales
+@import "./variables";
+@import "./mixins";
+@import "./utilities";
+@import "./animations";
+@import "./navbar";
+@import "./buttons";
+@import "./hero";
+@import "./carousel";
+@import "./cards";
+@import "./badges";
+@import "./info";
+@import "./whatsapp";
+

@@ -8,8 +8,8 @@
 }
 
 @mixin aspect($w, $h) {
-  aspect-ratio: ($w / $h);
-  position: relative; overflow: hidden;
+  aspect-ratio: math.div($w, $h);
+position: relative; overflow: hidden;
   & > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 }
 
