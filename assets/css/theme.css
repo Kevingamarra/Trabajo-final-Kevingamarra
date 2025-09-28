@@ -331,3 +331,20 @@ a {
 }
 
 /*# sourceMappingURL=theme.css.map */
+
+/* Fade-in hacia arriba */
+@keyframes fadeUp {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeUp {
+  animation: fadeUp .48s ease both;
+}
+
+/* Respeto a usuarios con reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeUp,
+  .animate-wiggle-x,
+  .card.product { animation: none !important; }
+}
+
