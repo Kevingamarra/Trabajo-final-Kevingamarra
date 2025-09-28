@@ -180,7 +180,6 @@ function renderCarouselSimple(rowId, items){
     ...p, category:'otros', aromas:[], subcat:p.subcat || '—', price:p.price || 0
   })).join('');
 }
-
 function attachRowNav(rowId){
   document.querySelectorAll(`.carousel-btn[data-target="${rowId}"]`).forEach(btn=>{
     const row = document.getElementById(rowId);
@@ -206,24 +205,6 @@ function attachRowNav(rowId){
     });
   });
 }
-
-// Forzar refresco de flechas al cambiar tamaño de ventana
-function refreshCarouselDisabledStates(){
-  document.querySelectorAll('.products-row').forEach(r=>{
-    r.dispatchEvent(new Event('scroll'));
-  });
-}
-
-function debounce(fn, wait){
-  let t;
-  return (...args)=>{
-    clearTimeout(t);
-    t = setTimeout(()=>fn.apply(this,args), wait);
-  };
-}
-
-window.addEventListener('resize', debounce(refreshCarouselDisabledStates, 150));
-
 
 /* ---- Buscador ---- */
 document.querySelector('form[role="search"]')?.addEventListener('submit', (e)=>{
@@ -366,36 +347,23 @@ document.getElementById('btnCheckout')?.addEventListener('click', checkoutViaWha
 
 /* ---- Inicio ---- */
 document.addEventListener('DOMContentLoaded', ()=>{
-  /* Subcategorías (Perfumería) */
+  // Filtros perfumería
   document.querySelectorAll('#perfumeria [data-subcat]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      document.querySelectorAll('#perfumeria [data-subcat]').forEach(b=>{
-        b.classList.remove('active');
-        b.setAttribute('aria-pressed','false');
-      });
+      document.querySelectorAll('#perfumeria [data-subcat]').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      btn.setAttribute('aria-pressed','true');
       currentFilters.subcat = btn.dataset.subcat;
       renderPerfumeria(currentFilters);
     });
   });
-
-  /*  Dropdown de Aromas (con label dinámico) */
-  const aromaBtn = document.querySelector('#aromaMenu .dropdown-toggle');
-  if (aromaBtn) aromaBtn.textContent = 'Aroma: Todos';
-
   document.querySelectorAll('#aromaMenu [data-aroma]').forEach(item=>{
-    item.addEventListener('click', (e)=>{
-      e.preventDefault();
+    item.addEventListener('click', ()=>{
       currentFilters.aroma = item.dataset.aroma;
-      if (aromaBtn) {
-        aromaBtn.textContent = `Aroma: ${currentFilters.aroma === '*' ? 'Todos' : currentFilters.aroma}`;
-      }
       renderPerfumeria(currentFilters);
     });
   });
 
-  /* Pintado inicial de contenido */
+  // Pintar contenido
   renderPerfumeria();
   renderCarouselSimple('row-cuidados',   productosCuidados);
   renderCarouselSimple('row-maquillaje', productosMaquillaje);
@@ -404,18 +372,3 @@ document.addEventListener('DOMContentLoaded', ()=>{
   attachRowNav('row-maquillaje');
   attachRowNav('row-regalos');
 });
-
-
-function refreshCarouselDisabledStates(){
-  document.querySelectorAll('.products-row').forEach(r=>{
-    r.dispatchEvent(new Event('scroll'));
-  });
-}
-function debounce(fn, wait){
-  let t;
-  return function(...args){
-    clearTimeout(t);
-    t = setTimeout(()=>fn.apply(this,args), wait);
-  }
-}
-window.addEventListener('resize', debounce(refreshCarouselDisabledStates, 150));
