@@ -250,9 +250,10 @@ a {
 }
 .card.product .card-body {
   padding: 0.75rem 0.9rem;
-  background: transparent; 
-  color: #000;           
+  background: transparent;
+  
 }
+  
 
 .card.product .title {
   font-size: 1rem;
@@ -385,7 +386,7 @@ a {
 
 /* Forzar color original rosa del precio */
 .card.product .price {
-  color: #fed0e3 !important; 
+  color: #fed0e3 ; 
   font-weight: 800;
   font-size: 1.15rem;
   text-decoration: underline;
