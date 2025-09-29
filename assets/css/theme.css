@@ -359,3 +359,7 @@ a {
   animation-delay: .06s, 0s; 
 }
 
+/* Combinar animaciones en cards cuando se use animate-fadeUp */
+.card.product.animate-fadeUp {
+  animation: card-pop 0.35s ease both, fadeUp 0.48s ease both;
+}
