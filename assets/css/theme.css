@@ -344,9 +344,10 @@ a {
 /* Respeto a usuarios con reduce motion */
 @media (prefers-reduced-motion: reduce) {
   .animate-fadeUp,
-  .animate-wiggle-x,
-  .card.product { animation: none !important; }
+  .card.product { animation-duration: 0.28s !important; }
+  .animate-wiggle-x { animation-duration: 1.2s !important; }
 }
+
 
 /* Fade + Wiggle juntos para títulos */
 .animate-fade-wiggle {
@@ -359,7 +360,13 @@ a {
   animation-delay: .06s, 0s; 
 }
 
-/* Combinar animaciones en cards cuando se use animate-fadeUp */
+/* Cards: pop + fadeUp  */
 .card.product.animate-fadeUp {
-  animation: card-pop 0.35s ease both, fadeUp 0.48s ease both;
+  animation: card-pop 0.35s ease both, fadeUp 0.48s ease both !important;
 }
+
+/* escalonado suave usando una CSS var --i */
+.products-row .card.product {
+  animation-delay: calc(var(--i, 0) * 70ms), calc(var(--i, 0) * 70ms) !important;
+}
+
