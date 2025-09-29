@@ -383,25 +383,18 @@ a {
   .reveal { opacity: 1 !important; }
 }
 
-/* Precio: más protagonismo sin cambiar el color */
-.card.product .price{
-  display: block;                 
-  margin-top: .25rem;             
-  font-weight: 800;               
-  font-size: 1.12rem;             
-  letter-spacing: 0.005em;        
-  text-decoration: underline;     
-  text-underline-offset: 2px;    
-  text-decoration-thickness: 2px; 
+/* Precio: resalta con peso y subrayado, sin sombra */
+.card.product .price {
+  display: block;
+  margin-top: .25rem;
+  font-weight: 800;              
+  font-size: 1.15rem;            
+  letter-spacing: 0.005em;       
+  
+  text-decoration: underline;    
+  text-underline-offset: 3px;    
+  text-decoration-thickness: 2px;
 
-  /* Contraste sutil sobre cualquier fondo */
-  text-shadow:
-    0 1px 2px rgba(0,0,0,.35),
-    0 0 1px rgba(0,0,0,.25);
-
-  /* Safari: contorno finito que no cambia el color */
-  -webkit-text-stroke: .35px rgba(0,0,0,.20);
-
-  /* Números más prolijos/parejos */
-  font-variant-numeric: lining-nums tabular-nums;
+  /* Se mantiene el color actual de .price */
+  color: inherit;
 }
