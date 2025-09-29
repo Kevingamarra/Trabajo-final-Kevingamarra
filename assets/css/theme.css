@@ -348,3 +348,14 @@ a {
   .card.product { animation: none !important; }
 }
 
+/* Fade + Wiggle juntos para títulos */
+.animate-fade-wiggle {
+  animation: fadeUp .48s ease both, wiggle-x 2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* delay utilitario para subtítulo */
+.anim-delay-06 {
+  animation-delay: .06s, 0s; 
+}
+
