@@ -383,14 +383,11 @@ a {
   .reveal { opacity: 1 !important; }
 }
 
-/* Precio: mantener #fed0e3 y resaltar sin sombra */
-.card.product .price{
+/* Forzar color original rosa del precio */
+.card.product .price {
   color: #fed0e3 !important; 
-  display: block;
-  margin-top: .25rem;
   font-weight: 800;
   font-size: 1.15rem;
-  letter-spacing: 0.005em;
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
