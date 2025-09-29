@@ -386,7 +386,7 @@ a {
 
 /* Forzar color original rosa del precio */
 .card.product .price {
-  color: #fed0e3 ; 
+  color: #d71d5c ; 
   font-weight: 900;
   font-size: 1.15rem;
   text-decoration: underline;
