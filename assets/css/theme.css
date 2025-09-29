@@ -250,9 +250,10 @@ a {
 }
 .card.product .card-body {
   padding: 0.75rem 0.9rem;
-  background: #0e0e10;
-  color: #fff;
+  background: transparent; 
+  color: #000;           
 }
+
 .card.product .title {
   font-size: 1rem;
   line-height: 1.2;
