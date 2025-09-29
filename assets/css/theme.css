@@ -370,3 +370,9 @@ a {
   animation-delay: calc(var(--i, 0) * 70ms), calc(var(--i, 0) * 70ms) !important;
 }
 
+/* Reveal solo para imágenes/cards */
+.reveal { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; }
+}

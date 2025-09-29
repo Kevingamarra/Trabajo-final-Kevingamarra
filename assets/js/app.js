@@ -111,14 +111,16 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
   }).join('') || `<p class="text-muted">No hay productos para el filtro seleccionado.</p>`;
 
   initRowNavButtons();
+  watchReveals(container);
+
 }
 
 /* ---- Card producto ----- */
 function cardProductHTML(p, i=0){
   const aromaBadges = (p.aromas||[]).map(a => `<span class="badge badge-aroma me-1 mb-1">${a}</span>`).join('');
-  const delay = (0.04 * i).toFixed(2); // escalonado suave
+  const delay = (0.04 * i).toFixed(2);
   return `
-    <div class="card product shadow-sm animate-fadeUp" style="animation-delay:${delay}s">
+    <div class="card product shadow-sm reveal" style="animation-delay:${delay}s">
       <div class="img-wrap">
         <img src="${p.img}" alt="${p.name}" loading="lazy">
       </div>
@@ -173,6 +175,7 @@ function renderCarouselSimple(rowId, items){
   row.innerHTML = items.map((p,i) => cardProductHTML({
     ...p, category:'otros', aromas:[], subcat:p.subcat || '—', price:p.price || 0
   }, i)).join('');
+  watchReveals(row);
 }
 
 /* También soportamos el helper attachRowNav que ya usabas */
@@ -201,6 +204,20 @@ function attachRowNav(rowId){
     });
   });
 }
+/* ---- Reveal on Scroll (solo cards) ---- */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('animate-fadeUp');
+      entry.target.classList.remove('reveal');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+
+function watchReveals(scope=document){
+  scope.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+}
 
 /* ---- Buscador ---- */
 document.querySelector('form[role="search"]')?.addEventListener('submit', (e)=>{
@@ -224,6 +241,7 @@ document.querySelector('form[role="search"]')?.addEventListener('submit', (e)=>{
       <button class="carousel-btn next" data-target="${rowId}"><i class="bi bi-chevron-right"></i></button>
     </div>`;
   initRowNavButtons();
+  watchReveals(container);
 });
 
 /* ---- Carrito ---- */
