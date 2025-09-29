@@ -9,7 +9,7 @@ const products = [
   // --- Humor (nuevos productos) ---
   { id:'hu1', name:'Humor Beijo',        price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-9.jpg',  category:'perfumeria', subcat:'Humor', aromas:['Frutal','Dulce'] },
   { id:'hu2', name:'Humor Transforma',   price:12499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-10.jpg', category:'perfumeria', subcat:'Humor', aromas:['Floral','Amaderado'] },
-  { id:'hu3', name:'Humor Meu Primero',  price:12999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-11.jpg', category:'perfumeria', subcat:'Humor', aromas:['Oriental'] },
+  { id:'hu3', name:'Humor Meu Primeiro', price:12999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-11.jpg', category:'perfumeria', subcat:'Humor', aromas:['Oriental'] },
   // --- Kriska (nuevos productos) ---
   { id:'kr1', name:'Kriska Drama',    price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-12.jpg', category:'perfumeria', subcat:'Kriska', aromas:['Frutal','Intenso'] },
   { id:'kr2', name:'Kriska Clásico',  price:11499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-13.jpg', category:'perfumeria', subcat:'Kriska', aromas:['Floral'] },
@@ -90,7 +90,7 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
     ? SUBCAT_ORDER.filter(k => groups[k]?.length)
     : [subcat]).filter(Boolean);
 
-  // pintar (añadimos animate-fadeUp al heading y a las cards vía cardProductHTML)
+  // pintar
   container.innerHTML = ordered.map(key => {
     const items = (groups[key] || []).sort((a,b)=>a.name.localeCompare(b.name));
     const rowId = `row-${slug(key)}`;
@@ -101,7 +101,7 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
           <i class="bi bi-chevron-left"></i>
         </button>
         <div class="products-row" id="${rowId}">
-          ${items.map(cardProductHTML).join('')}
+          ${items.map((p,i) => cardProductHTML(p,i)).join('')}
         </div>
         <button class="carousel-btn next" aria-label="Siguiente" data-target="${rowId}">
           <i class="bi bi-chevron-right"></i>
@@ -110,22 +110,15 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
     `;
   }).join('') || `<p class="text-muted">No hay productos para el filtro seleccionado.</p>`;
 
-  // “stagger” de animación para las cards
-  [...container.querySelectorAll('.products-row')].forEach(row=>{
-    [...row.querySelectorAll('.card.product.animate-fadeUp')].forEach((el,i)=>{
-      el.style.animationDelay = (0.04 * i) + 's';
-    });
-  });
-
   initRowNavButtons();
 }
 
 /* ---- Card producto ----- */
-/* Añadimos la clase animate-fadeUp y un pequeño delay inicial */
-function cardProductHTML(p){
+function cardProductHTML(p, i=0){
   const aromaBadges = (p.aromas||[]).map(a => `<span class="badge badge-aroma me-1 mb-1">${a}</span>`).join('');
+  const delay = (0.04 * i).toFixed(2); // escalonado suave
   return `
-    <div class="card product shadow-sm animate-fadeUp">
+    <div class="card product shadow-sm animate-fadeUp" style="animation-delay:${delay}s">
       <div class="img-wrap">
         <img src="${p.img}" alt="${p.name}" loading="lazy">
       </div>
@@ -177,17 +170,36 @@ function initRowNavButtons(){
 function renderCarouselSimple(rowId, items){
   const row = document.getElementById(rowId);
   if(!row) return;
+  row.innerHTML = items.map((p,i) => cardProductHTML({
+    ...p, category:'otros', aromas:[], subcat:p.subcat || '—', price:p.price || 0
+  }, i)).join('');
+}
 
-  // Render + añadimos animate-fadeUp con “stagger”
-  row.innerHTML = items.map((p,i) => {
-    const html = cardProductHTML({
-      ...p, category:'otros', aromas:[], subcat:p.subcat || '—', price:p.price || 0
+/* También soportamos el helper attachRowNav que ya usabas */
+function attachRowNav(rowId){
+  document.querySelectorAll(`.carousel-btn[data-target="${rowId}"]`).forEach(btn=>{
+    const row = document.getElementById(rowId);
+    if(!row) return;
+
+    const step = () => {
+      const card = row.querySelector('.card.product');
+      const val  = card ? card.getBoundingClientRect().width + 16 : row.clientWidth * 0.8;
+      return Math.max(200, Math.min(val, 420));
+    };
+    const updateDisabled = () => {
+      btn.closest('.carousel-row').querySelectorAll('.carousel-btn').forEach(b=>{
+        const r = document.getElementById(b.getAttribute('data-target'));
+        b.disabled = (b.classList.contains('prev') && r.scrollLeft <= 1)
+                  || (b.classList.contains('next') && r.scrollLeft + r.clientWidth >= r.scrollWidth - 1);
+      });
+    };
+    updateDisabled();
+    row.addEventListener('scroll', updateDisabled, { passive:true });
+
+    btn.addEventListener('click', ()=>{
+      row.scrollBy({ left: btn.classList.contains('prev') ? -step() : step(), behavior:'smooth' });
     });
-    return html.replace(
-      'class="card product shadow-sm animate-fadeUp"',
-      `class="card product shadow-sm animate-fadeUp" style="animation-delay:${(0.04*i).toFixed(2)}s"`
-    );
-  }).join('');
+  });
 }
 
 /* ---- Buscador ---- */
@@ -207,17 +219,10 @@ document.querySelector('form[role="search"]')?.addEventListener('submit', (e)=>{
     <div class="carousel-row">
       <button class="carousel-btn prev" data-target="${rowId}"><i class="bi bi-chevron-left"></i></button>
       <div class="products-row" id="${rowId}">
-        ${filtered.map(cardProductHTML).join('')}
+        ${filtered.map((p,i) => cardProductHTML(p,i)).join('')}
       </div>
       <button class="carousel-btn next" data-target="${rowId}"><i class="bi bi-chevron-right"></i></button>
     </div>`;
-
-  // stagger en resultados
-  const row = document.getElementById(rowId);
-  [...row.querySelectorAll('.card.product.animate-fadeUp')].forEach((el,i)=>{
-    el.style.animationDelay = (0.04 * i) + 's';
-  });
-
   initRowNavButtons();
 });
 
@@ -247,10 +252,9 @@ document.addEventListener('click', e=>{
 });
 document.getElementById('btnClearCart')?.addEventListener('click', ()=>{ cart=[]; updateCart(); });
 
-/* ---- CHECKOUT POR WHATSAPP ----*/
-const WHATSAPP_PHONE = '5491151039074'; // 
+/* ====== CHECKOUT POR WHATSAPP ====== */
+const WHATSAPP_PHONE = '5491151039074'; // <--- tu número
 
-// helpers checkout
 const formatAR = n => "$ " + Number(n).toLocaleString('es-AR');
 const cartTotal = () => cart.reduce((s,p) => s + Number(p.price||0), 0);
 
@@ -271,7 +275,6 @@ const cartTotal = () => cart.reduce((s,p) => s + Number(p.price||0), 0);
   toggle();
 })();
 
-// construir mensaje con validaciones
 function buildWhatsAppMessageOrError() {
   const nombreEl = document.getElementById('clienteNombre');
   const metodoEl = document.getElementById('metodoEnvio');
@@ -335,7 +338,6 @@ function checkoutViaWhatsApp(){
   window.open(url, '_blank');
 }
 
-// botón finalizar compra
 document.getElementById('btnCheckout')?.addEventListener('click', checkoutViaWhatsApp);
 
 /* ---- Inicio ---- */
