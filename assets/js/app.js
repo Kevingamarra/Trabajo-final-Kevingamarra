@@ -125,7 +125,7 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
 function cardProductHTML(p){
   const aromaBadges = (p.aromas||[]).map(a => `<span class="badge badge-aroma me-1 mb-1">${a}</span>`).join('');
   return `
-    <div class="card product shadow-sm animate-fadeUp" style="animation-delay:.04s">
+    <div class="card product shadow-sm animate-fadeUp">
       <div class="img-wrap">
         <img src="${p.img}" alt="${p.name}" loading="lazy">
       </div>
@@ -247,8 +247,8 @@ document.addEventListener('click', e=>{
 });
 document.getElementById('btnClearCart')?.addEventListener('click', ()=>{ cart=[]; updateCart(); });
 
-/* ====== CHECKOUT POR WHATSAPP ====== */
-const WHATSAPP_PHONE = '5491151039074'; // <--- tu número
+/* ---- CHECKOUT POR WHATSAPP ----*/
+const WHATSAPP_PHONE = '5491151039074'; // 
 
 // helpers checkout
 const formatAR = n => "$ " + Number(n).toLocaleString('es-AR');
