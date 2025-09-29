@@ -82,14 +82,19 @@ a {
   display: block;
 }
 .navbar .nav-link {
-  color: #fff;
-  transition: color 0.25s ease;
+  color: #fff;               
+  font-weight: 600;           
+  transition: all 0.25s ease; 
 }
+
 .navbar .nav-link:hover {
-  color: #fed0e3;
+  color: #fff;                
+  text-decoration: underline; 
 }
+
 .navbar .nav-link.active {
-  color: #fed0e3;
+  color: #fff;                
+  font-weight: 700;           
 }
 
 /* Base de botón reutilizable */
