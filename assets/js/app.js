@@ -1,5 +1,6 @@
 /* ---- DATA ---- */
 /* PERFUMERÍA (con subcarpetas) */
+
 // ---- FRESCOR ----
 const productosFrescor = [
   { id:'pf1',  name:'Pitangá Frescor',   price:13999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-1.jpg',  category:'perfumeria', subcat:'Frescor', aromas:['Cítrico','Verde','Fresco'] },
@@ -38,10 +39,9 @@ const productosLuna = [
   { id:'pf20', name:'Luna Absoluta',  price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-20.jpg', category:'perfumeria', subcat:'Luna', aromas:['Chipre Floral','Frutal rojo','Floral','Amaderado','Almizclado','Dulce'] },
 ];
 
-  
-// ----MASCULINO----
+/* ---- MASCULINO ---- */
 
-// ----KAIAK ----
+// ---- KAIAK ----
 const productosKaiak = [
   { id:'pm6',  name:'Kaiak Urbe',     price:15999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-6.jpg',  category:'perfumeria', subcat:'Kaiak', aromas:['Aromático','Amaderado'] },
   { id:'pm7',  name:'Kaiak Aventura', price:15999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-7.jpg',  category:'perfumeria', subcat:'Kaiak', aromas:['Aromático','Fresco'] },
@@ -52,9 +52,8 @@ const productosKaiak = [
   { id:'pm16', name:'Kaiak Clásico',  price:0,     img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-16.jpg', category:'perfumeria', subcat:'Kaiak', aromas:['Aromático','Acuático','Fougère'] },
 ];
 
-// ----ESSENCIAL ----
+// ---- ESSENCIAL ----
 const productosEssencial = [
-  
   { id:'pm2',  name:'Essencial Oud',                price:21999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-2.jpg',  category:'perfumeria', subcat:'Essencial', aromas:['Amaderado','Especiado','Oud'] }, 
   { id:'pe2',  name:'Essencial Supreme Masculino',  price:23999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-9.jpg',  category:'perfumeria', subcat:'Essencial', aromas:['Amaderado','Ámbar','Especiado'] }, 
   { id:'pe4',  name:'Essencial Oud Masculino',      price:24999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-10.jpg', category:'perfumeria', subcat:'Essencial', aromas:['Amaderado','Especiado','Oud'] }, 
@@ -64,9 +63,8 @@ const productosEssencial = [
   { id:'pe19', name:'Essencial Elixir',             price:0,     img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-19.jpg', category:'perfumeria', subcat:'Essencial', aromas:['Amaderado','Cuero','Vainilla','Ámbar'] }, 
 ];
 
-// ---- HOMEM -----
+// ---- HOMEM ----
 const productosHomem = [
-  
   { id:'pm3',  name:'Homem Potence',  price:18999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-3.jpg',  category:'perfumeria', subcat:'Homem', aromas:['Amaderado','Especiado'] },
   { id:'hm1',  name:'Homem Neo',      price:25999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-12.jpg', category:'perfumeria', subcat:'Homem', aromas:['Oriental','Amaderado'] },
   { id:'hm2',  name:'Homem Coragio',  price:23999, img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-4.jpg',  category:'perfumeria', subcat:'Homem', aromas:['Cítrico','Amaderado'] },
@@ -77,18 +75,23 @@ const productosHomem = [
   { id:'hm23', name:'Homem Nos',      price:0,     img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-23.jpg', category:'perfumeria', subcat:'Homem', aromas:['Amaderado','Ámbar','Especiado'] }, 
 ];
 
+// ---- UNIÓN MASCULINA (Kaiak + Essencial + Homem) ----
+const productosMasculina = [
+  ...productosKaiak,
+  ...productosEssencial,
+  ...productosHomem,
+];
+
 // ---- UNIÓN PERFUMERÍA (femenina + masculina) ----
 const products = [
   ...productosFrescor,
   ...productosKriska,
   ...productosHumorFem,
   ...productosLuna,
-  ...productosMasculina, // (Kaiak + Essencial + Homem)
+  ...productosMasculina,
 ];
 
-
 const SUBCAT_ORDER = ['Kaiak','Essencial','Kriska','Luna','Humor','Homem','Frescor'];
-
 const currentFilters = { subcat:'*', aroma:'*' };
 
 /* CUIDADOS */
@@ -126,31 +129,36 @@ const productosRegalos = [
 /* ---- Utilidades ----*/
 const slug = s => (s || 'otros').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
 
-/* ---- Render Perfumería ---- */
+/* ---- Render Perfumería (actualizado) ---- */
 function renderPerfumeria({ subcat='*', aroma='*' } = {}){
   const container = document.getElementById('perfumeria-groups');
-  if(!container) return;
+  if (!container) return;
+
+  if (!Array.isArray(products)) {
+    console.error('products no está definido o no es un array', products);
+    container.innerHTML = '<p class="text-danger">No se pudo cargar perfumería.</p>';
+    return;
+  }
 
   let list = products.filter(p => p.category === 'perfumeria');
   if (subcat !== '*') list = list.filter(p => p.subcat === subcat);
-  if (aroma !== '*')  list = list.filter(p => (p.aromas||[]).includes(aroma));
+  if (aroma !== '*')  list = list.filter(p => (p.aromas || []).indexOf(aroma) !== -1);
 
-  // agrupar por subcat (sin ||= para compatibilidad)
-const groups = {};
-for (const p of list) {
-  const key = p.subcat || 'Otros';
-  if (!groups[key]) groups[key] = [];
-  groups[key].push(p);
-}
+  // agrupar por subcat (compat total)
+  const groups = {};
+  for (const p of list) {
+    const key = p.subcat || 'Otros';
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(p);
+  }
 
   // orden definido
   const ordered = (subcat === '*'
-  ? SUBCAT_ORDER.filter(k => groups[k]?.length)
-  : [subcat]).filter(Boolean);
+    ? SUBCAT_ORDER.filter(k => (groups[k] || []).length > 0)
+    : [subcat]).filter(Boolean);
 
-  // pintar
   container.innerHTML = ordered.map(key => {
-    const items = (groups[key] || []).sort((a,b)=>a.name.localeCompare(b.name));
+    const items = (groups[key] || []).sort((a,b)=> a.name.localeCompare(b.name));
     const rowId = `row-${slug(key)}`;
     return `
       <h3 class="subcat-heading mb-3 animate-fadeUp">${key}</h3>
@@ -166,11 +174,10 @@ for (const p of list) {
         </button>
       </div>
     `;
-  }).join('') || `<p class="text-muted">No hay productos para el filtro seleccionado.</p>`;
+  }).join('') || '<p class="text-muted">No hay productos para el filtro seleccionado.</p>';
 
   initRowNavButtons();
   watchReveals(container);
-
 }
 
 /* ---- Card producto ----- */
@@ -236,7 +243,7 @@ function renderCarouselSimple(rowId, items){
   watchReveals(row);
 }
 
-/* También soportamos el helper attachRowNav que ya usabas */
+/* helper attachRowNav */
 function attachRowNav(rowId){
   document.querySelectorAll(`.carousel-btn[data-target="${rowId}"]`).forEach(btn=>{
     const row = document.getElementById(rowId);
@@ -262,6 +269,7 @@ function attachRowNav(rowId){
     });
   });
 }
+
 /* ---- Reveal on Scroll (solo cards) ---- */
 const revealObserver = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
@@ -278,29 +286,33 @@ function watchReveals(scope=document){
 }
 
 /* ---- Buscador ---- */
-document.querySelector('form[role="search"]')?.addEventListener('submit', (e)=>{
-  e.preventDefault();
-  const q = (document.getElementById('searchProducts')?.value || '').toLowerCase().trim();
-  if(!q){ renderPerfumeria(currentFilters); return; }
-  currentFilters.subcat='*';
-  const filtered = products.filter(p =>
-    p.category==='perfumeria' &&
-    (p.name.toLowerCase().includes(q) || (p.subcat||'').toLowerCase().includes(q))
-  );
-  const container = document.getElementById('perfumeria-groups');
-  const rowId = 'row-search';
-  container.innerHTML = `
-    <h3 class="subcat-heading animate-fadeUp">Resultados</h3>
-    <div class="carousel-row">
-      <button class="carousel-btn prev" data-target="${rowId}"><i class="bi bi-chevron-left"></i></button>
-      <div class="products-row" id="${rowId}">
-        ${filtered.map((p,i) => cardProductHTML(p,i)).join('')}
-      </div>
-      <button class="carousel-btn next" data-target="${rowId}"><i class="bi bi-chevron-right"></i></button>
-    </div>`;
-  initRowNavButtons();
-  watchReveals(container);
-});
+const searchForm = document.querySelector('form[role="search"]');
+if (searchForm) {
+  searchForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const input = document.getElementById('searchProducts');
+    const q = (input && input.value ? input.value : '').toLowerCase().trim();
+    if(!q){ renderPerfumeria(currentFilters); return; }
+    currentFilters.subcat='*';
+    const filtered = products.filter(p =>
+      p.category==='perfumeria' &&
+      (p.name.toLowerCase().includes(q) || ((p.subcat||'').toLowerCase().includes(q)))
+    );
+    const container = document.getElementById('perfumeria-groups');
+    const rowId = 'row-search';
+    container.innerHTML = `
+      <h3 class="subcat-heading animate-fadeUp">Resultados</h3>
+      <div class="carousel-row">
+        <button class="carousel-btn prev" data-target="${rowId}"><i class="bi bi-chevron-left"></i></button>
+        <div class="products-row" id="${rowId}">
+          ${filtered.map((p,i) => cardProductHTML(p,i)).join('')}
+        </div>
+        <button class="carousel-btn next" data-target="${rowId}"><i class="bi bi-chevron-right"></i></button>
+      </div>`;
+    initRowNavButtons();
+    watchReveals(container);
+  });
+}
 
 /* ---- Carrito ---- */
 let cart = [];
@@ -318,9 +330,10 @@ function updateCart(){
   if (badge) badge.textContent = cart.length;
   if (total) total.textContent = "$ " + cart.reduce((s,p)=>s+p.price,0).toLocaleString('es-AR');
 }
-document.addEventListener('click', e=>{
-  const id = e.target?.getAttribute?.('data-add');
-  if(id){
+document.addEventListener('click', (e)=>{
+  const addBtn = e.target && e.target.closest ? e.target.closest('[data-add]') : null;
+  if(addBtn){
+    const id = addBtn.getAttribute('data-add');
     const all = [...products, ...productosCuidados, ...productosMaquillaje, ...productosRegalos];
     const prod = all.find(p=>p.id===id);
     if(prod) addToCart(prod);
@@ -328,7 +341,7 @@ document.addEventListener('click', e=>{
 });
 document.getElementById('btnClearCart')?.addEventListener('click', ()=>{ cart=[]; updateCart(); });
 
-/* ====== CHECKOUT POR WHATSAPP ====== */
+/* ---- CHECKOUT POR WHATSAPP ----*/
 const WHATSAPP_PHONE = '5491151039074'; // <--- tu número
 
 const formatAR = n => "$ " + Number(n).toLocaleString('es-AR');
