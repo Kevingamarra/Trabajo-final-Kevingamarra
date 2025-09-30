@@ -135,14 +135,18 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
   if (subcat !== '*') list = list.filter(p => p.subcat === subcat);
   if (aroma !== '*')  list = list.filter(p => (p.aromas||[]).includes(aroma));
 
-  // agrupar por subcat
-  const groups = {};
-  list.forEach(p => { (groups[p.subcat || 'Otros'] ||= []).push(p); });
+  // agrupar por subcat (sin ||= para compatibilidad)
+const groups = {};
+for (const p of list) {
+  const key = p.subcat || 'Otros';
+  if (!groups[key]) groups[key] = [];
+  groups[key].push(p);
+}
 
   // orden definido
   const ordered = (subcat === '*'
-    ? SUBCAT_ORDER.filter(k => groups[k]?.length)
-    : [subcat]).filter(Boolean);
+  ? SUBCAT_ORDER.filter(k => groups[k]?.length)
+  : [subcat]).filter(Boolean);
 
   // pintar
   container.innerHTML = ordered.map(key => {
