@@ -1,28 +1,34 @@
 /* ---- DATA ---- */
 /* PERFUMERÍA (con subcarpetas) */
-const products = [
-  // ---- FRESCOR ----
-{ id:'pf1',  name:'Pitangá Frescor', price:13999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-1.jpg',  category:'perfumeria', subcat:'Frescor', aromas:['Cítrico','Verde','Fresco'] },
-{ id:'pf21', name:'Frescor Ishpink', price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-21.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Floral','Especiado suave','Herbal'] },
-{ id:'pf22', name:'Frescor Açaí',    price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-22.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Frutal','Dulce','Exótico'] },
-{ id:'pf23', name:'Frescor Castaña', price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-23.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Dulce','Cremoso','Avainillado','Frutal seco'] },
-{ id:'pf24', name:'Frescor Cacau',   price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-24.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Cacao','Dulce','Gourmand','Amaderado suave'] },
-{ id:'pf25', name:'Frescor Maracuyá',price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-25.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Frutal','Cítrico','Tropical'] },
-{ id:'pf26', name:'Frescor Estoraque',price:0,    img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-26.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Ambarado','Especiado','Resinoso','Balsámico'] },
+// ---- FRESCOR ----
+const productosFrescor = [
+  { id:'pf1',  name:'Pitangá Frescor',   price:13999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-1.jpg',  category:'perfumeria', subcat:'Frescor', aromas:['Cítrico','Verde','Fresco'] },
+  { id:'pf21', name:'Frescor Ishpink',   price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-21.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Floral','Especiado suave','Herbal'] },
+  { id:'pf22', name:'Frescor Açaí',      price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-22.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Frutal','Dulce','Exótico'] },
+  { id:'pf23', name:'Frescor Castaña',   price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-23.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Dulce','Cremoso','Avainillado','Frutal seco'] },
+  { id:'pf24', name:'Frescor Cacau',     price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-24.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Cacao','Dulce','Gourmand','Amaderado suave'] },
+  { id:'pf25', name:'Frescor Maracuyá',  price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-25.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Frutal','Cítrico','Tropical'] },
+  { id:'pf26', name:'Frescor Estoraque', price:0,     img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-26.jpg', category:'perfumeria', subcat:'Frescor', aromas:['Ambarado','Especiado','Resinoso','Balsámico'] },
+];
 
-  // ---- KRISKA ----
+// ---- KRISKA ----
+const productosKriska = [
   { id:'pf4', name:'Kriska Shock',    price:12999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-4.jpg',  category:'perfumeria', subcat:'Kriska', aromas:['Frutal'] },
   { id:'kr1', name:'Kriska Drama',    price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-12.jpg', category:'perfumeria', subcat:'Kriska', aromas:['Frutal','Intenso'] },
   { id:'kr2', name:'Kriska Clásico',  price:11499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-13.jpg', category:'perfumeria', subcat:'Kriska', aromas:['Floral'] },
   { id:'kr3', name:'Kriska Jeans',    price:10999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-14.jpg', category:'perfumeria', subcat:'Kriska', aromas:['Cítrico','Casual'] },
+];
 
-  // ---- HUMOR ----
+// ---- HUMOR ----
+const productosHumorFem = [
   { id:'pf5', name:'Humor Própria',      price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-5.jpg',  category:'perfumeria', subcat:'Humor', aromas:['Frutal'] },
   { id:'hu1', name:'Humor Beijo',        price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-9.jpg',  category:'perfumeria', subcat:'Humor', aromas:['Frutal','Dulce'] },
   { id:'hu2', name:'Humor Transforma',   price:12499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-10.jpg', category:'perfumeria', subcat:'Humor', aromas:['Floral','Amaderado'] },
   { id:'hu3', name:'Humor Meu Primeiro', price:12999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-11.jpg', category:'perfumeria', subcat:'Humor', aromas:['Oriental'] },
+];
 
-  // ---- LUNA ----
+// ---- LUNA ----
+const productosLuna = [
   { id:'pf8',  name:'Luna Rubí',      price:14499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-8.jpg',  category:'perfumeria', subcat:'Luna', aromas:['Chipre','Especiado','Amaderado','Floral'] },
   { id:'lu1',  name:'Luna Radiante',  price:13999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-15.jpg', category:'perfumeria', subcat:'Luna', aromas:['Floral','Frutal'] },
   { id:'lu2',  name:'Luna Actitud',   price:14499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-16.jpg', category:'perfumeria', subcat:'Luna', aromas:['Amaderado','Floral'] },
@@ -71,12 +77,15 @@ const productosHomem = [
   { id:'hm23', name:'Homem Nos',      price:0,     img:'assets/img/productos/perfumeria/masculina/perfumeria-masculina-23.jpg', category:'perfumeria', subcat:'Homem', aromas:['Amaderado','Ámbar','Especiado'] }, 
 ];
 
-// unión si render espera un solo array:
-const productosMasculina = [
-  ...productosKaiak,
-  ...productosEssencial,
-  ...productosHomem,
+// ---- UNIÓN PERFUMERÍA (femenina + masculina) ----
+const products = [
+  ...productosFrescor,
+  ...productosKriska,
+  ...productosHumorFem,
+  ...productosLuna,
+  ...productosMasculina, // (Kaiak + Essencial + Homem)
 ];
+
 
 const SUBCAT_ORDER = ['Kaiak','Essencial','Kriska','Luna','Humor','Homem','Frescor'];
 
