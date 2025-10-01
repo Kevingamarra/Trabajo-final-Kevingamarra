@@ -333,3 +333,36 @@ header.navbar .container{
   }
 }
 
+/* --- Fix mobile: centrar contenido y evitar scroll horizontal --- */
+@media (max-width: 575.98px){
+  html, body{ overflow-x: hidden; }
+
+  /* Hero sin 100vw ni translate para que no cree desborde */
+  .hero-video .video-wrap{
+    width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  /* Swiper: no permitir desbordes laterales en mobile */
+  .products-row.swiper{ overflow-x: hidden !important; }
+
+  /* Seguridad extra: nada de overflow lateral en secciones/fluidos */
+  .container, .container-fluid, section, .section{ overflow-x: clip; }
+}
+
+/* Mobile: achicar imagen de medios de pago */
+@media (max-width: 575.98px){
+  .pay-logos{
+    display: block;
+    margin: .5rem auto 0;       
+    width: auto;                
+    max-width: clamp(160px, 60vw, 240px); 
+    height: auto;
+  }
+}
+
+/* Tablet chica */
+@media (min-width: 576px) and (max-width: 767.98px){
+  .pay-logos{ max-width: 280px; }
+}
