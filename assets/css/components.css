@@ -26,36 +26,44 @@
 /* Evitar que algún wrapper bloquee sticky */
 header, .site-header { overflow: visible !important; }
 
-/* Sticky SIEMPRE, aunque el HTML tenga fixed-top/sticky-top */
+/* Sticky */
+header.navbar,
+header.navbar.sticky-top,
+header.navbar.fixed-top,
 nav.navbar,
 nav.navbar.sticky-top,
 nav.navbar.fixed-top,
-.sticky-top,
-.fixed-top {
+.navbar.sticky-top,
+.navbar.fixed-top {
   position: sticky !important;
   top: 0;
   z-index: 1000;
 }
 
-/* Fondo ROSA CLARO (paleta) + separador sutil */
+/* Fondo ROSA CLARO y borde suave — pisa Bootstrap y theme */
+header.navbar,
+header.navbar[class*="bg-"],
 nav.navbar,
-nav.navbar[class*="bg-"] {
+nav.navbar[class*="bg-"],
+.navbar {
+  --bs-navbar-bg: #fed0e3 !important;
   background-color: #fed0e3 !important;
   background: #fed0e3 !important;
   border-bottom: 1px solid #e085a4;     
 }
-/* Texto del navbar con buen contraste (paleta) */
+
+/* Texto con contraste de tu paleta */
 .navbar .navbar-brand,
 .navbar .nav-link {
   color: #bc3662 !important;  
   text-shadow: none !important;
 }
 
-/* Hover/focus/active con acento fucsia marca */
+/* Hover/focus/active con acento fucsia */
 .navbar .nav-link:hover,
 .navbar .nav-link:focus-visible,
 .navbar .nav-link.active {
-  color: #d71d5c !important;  /* fucsia */
+  color: #d71d5c !important;
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
@@ -65,4 +73,4 @@ nav.navbar[class*="bg-"] {
 
 /* Sin padding-top de nav fijo anterior y anclas con margen */
 body { padding-top: 0 !important; }
-section, .section { scroll-margin-top: var(--nav-h);}
+section, .section { scroll-margin-top: var(--nav-h); }
