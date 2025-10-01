@@ -1,26 +1,62 @@
+/* ----Cards de producto ----*/
 .card.product{
-  scroll-snap-align:start; height:100%;
-  display:flex; flex-direction:column; border-radius:$radius-xl; overflow:hidden;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  scroll-snap-align: start;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: $radius-xl;
+  overflow: hidden;
+
+  /* base + transición única */
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  transition: transform .2s ease, box-shadow .2s ease;
+  will-change: transform, box-shadow; 
+  /* animación de entrada */
   animation: card-pop .35s ease both;
 
-  .img-wrap{ width:100%; background:#fff; @include aspect(3, 4); }
-  .card-body{ padding:.75rem .9rem; background:#0e0e10; color:#fff; }
-  .title{ font-size:1rem; line-height:1.2; }
-  .price{ color:$brand-3; }
+  .img-wrap{
+    width: 100%;
+    background: #fff;
+    @include aspect(3, 4);      
+    position: relative;
+    overflow: hidden;
 
-  &:hover{
-    transform: translateY(-2px);
-    box-shadow:0 6px 18px rgba(0,0,0,.14);
-    .title{ text-decoration: underline; }
+    img{
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .25s ease; 
+    }
   }
-}
 
-/* Cards de producto: elevación sutil al hover */
-.card.product {
-  transition: transform .2s ease, box-shadow .2s ease;
-  &:hover { 
-    transform: translateY(-3px); 
-    box-shadow: 0 12px 28px rgba(0,0,0,.12); 
+  .card-body{
+    padding: .75rem .9rem;
+    background: #0e0e10; 
+    color: #fff;
+  }
+
+  .title{
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  /* Precio  */
+  .price{
+    color: $brand-3;
+    font-weight: 900;
+    font-size: 1.15rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+  }
+
+  /* Hover + Focus (teclado) */
+  &:hover,
+  &:focus-within{ 
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0,0,0,.12);
+
+    .title{ text-decoration: underline; }
+    .img-wrap img{ transform: scale(1.03); }
   }
 }

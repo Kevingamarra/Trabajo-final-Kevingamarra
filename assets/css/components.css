@@ -1,0 +1,22 @@
+/* components.css — overrides responsivos por componente */
+
+/* Hero: en mobile asegurar 16/9  */
+@media (max-width: 575.98px) {
+  .hero-video .video-wrap { aspect-ratio: 16 / 9; }
+}
+
+/* Swiper/cards: tamaños de slide por breakpoint*/
+@media (max-width: 575.98px) {
+  .products-row .swiper-slide { min-width: 78vw; }
+}
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .products-row .swiper-slide { min-width: 44vw; }
+}
+@media (min-width: 992px) {
+  .products-row .swiper-slide { min-width: 260px; max-width: 300px; }
+}
+
+/* Navbar en pantallas táctiles*/
+@media (hover: none) and (pointer: coarse) {
+  .navbar .nav-link:hover { text-decoration: none; text-shadow: none; }
+}

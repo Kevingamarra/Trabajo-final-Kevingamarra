@@ -1,4 +1,65 @@
-@charset "UTF-8";
+/* Anti-overflow-x + base reset  */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  overflow-x: hidden;              
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Medios que pueden estirar contenedores si no se limitan */
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* iframes */
+iframe { max-width: 100%; }
+
+/* Contenedores a lo ancho: evitar 100vw = overflow */
+.full-bleed,
+.navbar,
+.hero,
+.hero-video,
+.footer {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Layout base seguro */
+.container, .section, .wrapper {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(12px, 2vw, 24px);
+}
+
+/* Swiper: evitar desbordes por wrapper/slides */
+.swiper { width: 100%; max-width: 100%; overflow: hidden; }
+.swiper-wrapper { max-width: 100%; }
+.swiper-slide { box-sizing: border-box; }
+
+/* Botones/filtros: no crecer de más en móviles */
+button, .btn, [role="button"] {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* Filas horizontales (logos, etc.) */
+.horizontal-scroll, .logos-row {
+  display: flex;
+  gap: .75rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---- Tipografía fluida ----
+   $min: font-size en móviles
+   $max: font-size en desktop
+   $minw/$maxw: rangos de viewport para interpolar */
 body {
   font-family: "Natura Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   background: #fffeff;
@@ -41,7 +102,8 @@ a {
   transition: outline-color 0.15s ease, outline-offset 0.15s ease;
 }
 
-/* Vaivén horizontal para logo + h1 */
+/* ----Animaciones globales ---- */
+/* Wiggle horizontal */
 @keyframes wiggle-x {
   0%, 100% {
     transform: translateX(0);
@@ -60,7 +122,7 @@ a {
   animation: wiggle-x 2s ease-in-out infinite;
 }
 
-/* Entrada de cards */
+/* Pop inicial de las cards */
 @keyframes card-pop {
   from {
     transform: translateY(8px);
@@ -71,8 +133,42 @@ a {
     opacity: 1;
   }
 }
+/* Fade-in hacia arriba */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeUp {
+  animation: fadeUp 0.48s ease both;
+}
+
+/* Fade + Wiggle juntos */
+.animate-fade-wiggle {
+  animation: fadeUp 0.48s ease both, wiggle-x 2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Delay utilitario */
+.anim-delay-06 {
+  animation-delay: 0.06s, 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeUp,
+  .animate-fade-wiggle,
+  .card.product {
+    animation-duration: 0.28s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
 .navbar {
-  background: #fed0e3;
+  background: #d71d5c;
 }
 .navbar .navbar-brand {
   color: #fff;
@@ -82,19 +178,18 @@ a {
   display: block;
 }
 .navbar .nav-link {
-  color: #fff;               
-  font-weight: 600;           
-  transition: all 0.25s ease; 
+  color: #fff;
+  font-weight: 600;
+  transition: color 0.25s ease;
 }
-
-.navbar .nav-link:hover {
-  color: #fff;                
-  text-decoration: underline; 
-}
-
-.navbar .nav-link.active {
-  color: #fff;                
-  font-weight: 700;           
+.navbar .nav-link:hover, .navbar .nav-link:focus-visible, .navbar .nav-link.active {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  text-shadow: 0 0 10px rgba(215, 29, 92, 0.35);
+  outline: 2px solid rgba(254, 208, 227, 0.8);
+  outline-offset: 2px;
 }
 
 /* Base de botón reutilizable */
@@ -160,23 +255,37 @@ a {
 }
 .hero-video .video-wrap {
   width: 100%;
-  aspect-ratio: 1920 / 500;   
+  aspect-ratio: 1.7777777778;
   position: relative;
   overflow: hidden;
-
-  /* Límites para que se vea bien en todos lados */
-  max-height: 500px;   
-  min-height: 220px;   
 }
-
 .hero-video .video-wrap > * {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;   
+  object-fit: cover;
+}
+.hero-video .video-wrap {
+  position: relative;
+}
+.hero-video .video-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.25s ease;
+}
+.hero-video .video-wrap.overlay-on::after {
+  background: rgba(0, 0, 0, 0.22);
+}
+.hero-video .video-wrap.overlay-strong::after {
+  background: rgba(0, 0, 0, 0.36);
 }
 
+/* ---Bridge a Swiper ---- */
+/* contenedor y flechas */
 .carousel-row {
   position: relative;
   display: grid;
@@ -194,41 +303,44 @@ a {
   display: grid;
   place-content: center;
   transition: transform 0.2s ease;
+  cursor: pointer;
+}
+.carousel-row .carousel-btn:focus-visible {
+  outline: 3px solid rgba(254, 208, 227, 0.35);
+  outline-offset: 2px;
 }
 .carousel-row .carousel-btn:disabled {
   opacity: 0.35;
+  cursor: default;
 }
 .carousel-row .carousel-btn:active {
   transform: scale(0.96);
 }
 
+/* El track será .products-row.swiper con .swiper-wrapper dentro */
 .products-row {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(220px, 280px);
+  /* APAGAMOS el modo scroll-snap manual */
+  overflow: visible;
+  scroll-snap-type: none;
+  overscroll-behavior-x: auto;
+  padding: 0;
+  /* Layout Swiper */
+}
+.products-row.swiper {
+  width: 100%;
+}
+.products-row .swiper-wrapper {
+  display: flex;
   gap: 1rem;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  padding: 0.25rem;
-}
-@media (max-width: 575.98px) {
-  .products-row {
-    grid-auto-columns: 78vw;
-    gap: 0.75rem;
-  }
-}
-@media (min-width: 576px) and (max-width: 991.98px) {
-  .products-row {
-    grid-auto-columns: 44vw;
-  }
-}
-@media (min-width: 992px) {
-  .products-row {
-    grid-auto-columns: minmax(240px, 300px);
-  }
 }
 
+/* Cada tarjeta  es .swiper-slide  */
+
+.products-row .swiper-slide {
+  width: auto;
+}
+
+/* ----Cards de producto ----*/
 .card.product {
   scroll-snap-align: start;
   height: 100%;
@@ -236,7 +348,11 @@ a {
   flex-direction: column;
   border-radius: 16px;
   overflow: hidden;
+  /* base + transición única */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
+  /* animación de entrada */
   animation: card-pop 0.35s ease both;
 }
 .card.product .img-wrap {
@@ -253,35 +369,50 @@ a {
   height: 100%;
   object-fit: cover;
 }
+.card.product .img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.card.product .img-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
 .card.product .card-body {
   padding: 0.75rem 0.9rem;
-  background: transparent;
-  
+  background: #0e0e10;
+  color: #fff;
 }
-  
-
 .card.product .title {
   font-size: 1rem;
   line-height: 1.2;
 }
+
+  /* Precio  */
+
 .card.product .price {
   color: #fed0e3;
-}
-.card.product:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
-}
-.card.product:hover .title {
+  font-weight: 900;
+  font-size: 1.15rem;
   text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
 }
 
-/* Cards de producto: elevación sutil al hover */
-.card.product {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.card.product:hover {
+  /* Hover + Focus (teclado) */
+
+.card.product:hover, .card.product:focus-within {
   transform: translateY(-3px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+.card.product:hover .title, .card.product:focus-within .title {
+  text-decoration: underline;
+}
+.card.product:hover .img-wrap img, .card.product:focus-within .img-wrap img {
+  transform: scale(1.03);
 }
 
 .badge-aroma, .badge-subcat {
@@ -342,61 +473,40 @@ a {
   outline-offset: 2px;
 }
 
-/*# sourceMappingURL=theme.css.map */
-
-/* Fade-in hacia arriba */
-@keyframes fadeUp {
-  0%   { opacity: 0; transform: translateY(12px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.animate-fadeUp {
-  animation: fadeUp .48s ease both;
+/* ---- Cursor en elementos interactivos ----*/
+.carousel-row .carousel-btn {
+  cursor: pointer;
 }
 
-/* Respeto a usuarios con reduce motion */
-@media (prefers-reduced-motion: reduce) {
-  .animate-fadeUp,
-  .card.product { animation-duration: 0.28s !important; }
-  .animate-wiggle-x { animation-duration: 1.2s !important; }
+.card.product .btn {
+  cursor: pointer;
 }
 
-
-/* Fade + Wiggle juntos para títulos */
-.animate-fade-wiggle {
-  animation: fadeUp .48s ease both, wiggle-x 2s ease-in-out infinite;
-  will-change: transform, opacity;
+#aromaMenu .dropdown-toggle,
+#aromaMenu .dropdown-item,
+#perfumeria [data-subcat] {
+  cursor: pointer;
 }
 
-/* delay utilitario para subtítulo */
-.anim-delay-06 {
-  animation-delay: .06s, 0s; 
+.navbar .nav-link {
+  cursor: pointer;
 }
 
-/* Cards: pop + fadeUp  */
-.card.product.animate-fadeUp {
-  animation: card-pop 0.35s ease both, fadeUp 0.48s ease both !important;
+/* ---- Títulos fluidos ---- */
+h1, .h1 {
+  font-size: clamp(1.75rem, 1.75rem + (2.5rem - 1.75rem) * (100vw - 320px) / (1200px - 320px), 2.5rem);
+  line-height: 1.1;
 }
 
-/* escalonado suave usando una CSS var --i */
-.products-row .card.product {
-  animation-delay: calc(var(--i, 0) * 70ms), calc(var(--i, 0) * 70ms) !important;
+h2, .h2,
+.section-title {
+  font-size: clamp(1.25rem, 1.25rem + (1.75rem - 1.25rem) * (100vw - 320px) / (1200px - 320px), 1.75rem);
+  line-height: 1.15;
 }
 
-/* Reveal solo para imágenes/cards */
-.reveal { opacity: 0; }
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1 !important; }
+/* Títulos de cards */
+.card.product .title {
+  font-size: clamp(1rem, 1rem + (1.1rem - 1rem) * (100vw - 320px) / (1200px - 320px), 1.1rem);
 }
 
-/* Forzar color original rosa del precio */
-.card.product .price {
-  color: #d71d5c ; 
-  font-weight: 900;
-  font-size: 1.15rem;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 2px;
-}
-
-
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../scss/_mixins.scss%22,%22../scss/_utilities.scss%22,%22../scss/_variables.scss%22,%22../scss/_animations.scss%22,%22../scss/_navbar.scss%22,%22../scss/_buttons.scss%22,%22../scss/_hero.scss%22,%22../scss/_carousel.scss%22,%22../scss/_cards.scss%22,%22../scss/_badges.scss%22,%22../scss/_info.scss%22,%22../scss/_whatsapp.scss%22,%22../scss/_cursor.scss%22,%22../scss/_typography.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%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%22,%22file%22:%22theme.css%22%7D */

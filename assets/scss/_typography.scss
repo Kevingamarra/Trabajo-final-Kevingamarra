@@ -1,0 +1,16 @@
+/* ---- Títulos fluidos ---- */
+h1, .h1 { 
+  @include fluid-type(1.75rem, 2.5rem); 
+  line-height: 1.1; 
+}
+
+h2, .h2, 
+.section-title { 
+  @include fluid-type(1.25rem, 1.75rem); 
+  line-height: 1.15; 
+}
+
+/* Títulos de cards */
+.card.product .title { 
+  @include fluid-type(1rem, 1.1rem); 
+}

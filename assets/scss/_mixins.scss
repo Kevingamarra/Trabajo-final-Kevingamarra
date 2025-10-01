@@ -21,3 +21,13 @@ position: relative; overflow: hidden;
   outline: 3px solid rgba($color, .4);
   outline-offset: 2px;
 }
+
+/* ---- Tipografía fluida ----
+   $min: font-size en móviles
+   $max: font-size en desktop
+   $minw/$maxw: rangos de viewport para interpolar */
+@mixin fluid-type($min, $max, $minw: 320px, $maxw: 1200px) {
+  font-size: clamp($min,
+                   calc(#{$min} + (#{$max} - #{$min}) * ((100vw - #{$minw}) / (#{$maxw} - #{$minw}))),
+                   $max);
+}

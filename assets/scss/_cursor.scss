@@ -1,0 +1,19 @@
+/* ---- Cursor en elementos interactivos ----*/
+
+.carousel-row .carousel-btn {
+  cursor: pointer;
+}
+
+.card.product .btn {
+  cursor: pointer;
+}
+
+#aromaMenu .dropdown-toggle,
+#aromaMenu .dropdown-item,
+#perfumeria [data-subcat] {
+  cursor: pointer;
+}
+
+.navbar .nav-link {
+  cursor: pointer;
+}

@@ -1,16 +1,45 @@
-/* Vaivén horizontal para logo + h1 */
+/* ----Animaciones globales ---- */
+
+/* Wiggle horizontal */
 @keyframes wiggle-x {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  50% { transform: translateX(3px); }
-  75% { transform: translateX(-3px); }
+  25%      { transform: translateX(-3px); }
+  50%      { transform: translateX(3px); }
+  75%      { transform: translateX(-3px); }
 }
 .animate-wiggle-x {
   animation: wiggle-x 2s ease-in-out infinite;
 }
 
-/* Entrada de cards */
+/* Pop inicial de las cards */
 @keyframes card-pop {
   from { transform: translateY(8px); opacity: 0; }
   to   { transform: translateY(0);   opacity: 1; }
+}
+
+/* Fade-in hacia arriba */
+@keyframes fadeUp {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeUp {
+  animation: fadeUp .48s ease both;
+}
+
+/* Fade + Wiggle juntos */
+.animate-fade-wiggle {
+  animation: fadeUp .48s ease both, wiggle-x 2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Delay utilitario */
+.anim-delay-06 { animation-delay: .06s, 0s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeUp,
+  .animate-fade-wiggle,
+  .card.product {
+    animation-duration: .28s !important;
+    animation-iteration-count: 1 !important;
+  }
 }

@@ -1,14 +1,28 @@
-.navbar{
+.navbar {
   background: $brand-1;
 
-  .navbar-brand{
-    color: #fff; font-weight: 700;
-    img { display:block; }
-  }
-  .nav-link{
+  .navbar-brand {
     color: #fff;
+    font-weight: 700;
+
+    img { display: block; }
+  }
+
+  .nav-link {
+    color: #fff;
+    font-weight: 600;
     @include smooth(color);
-    &:hover{ color: $brand-3; }
-    &.active{ color: $brand-3; }
+
+    &:hover,
+    &:focus-visible,
+    &.active {
+      color: #fff; 
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+      text-shadow: 0 0 10px rgba($brand-1, 0.35); 
+      outline: 2px solid rgba($brand-3, 0.8); 
+      outline-offset: 2px;
+    }
   }
 }

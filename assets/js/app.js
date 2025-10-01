@@ -129,7 +129,33 @@ const productosRegalos = [
 /* ---- Utilidades ----*/
 const slug = s => (s || 'otros').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
 
-/* ---- Render Perfumería (actualizado) ---- */
+/* ---- Swiper: inicializador por fila (usa TUS flechas) ---- */
+function initSwiperForRow(rowId, { loop=false } = {}) {
+  const container = document.getElementById(rowId);
+  if (!container) return;
+
+  // flechas hermanas (las del HTML, dentro de .carousel-row)
+  const parent = container.closest('.carousel-row');
+  const nextEl = parent?.querySelector(`.carousel-btn.next[data-target="${rowId}"]`);
+  const prevEl = parent?.querySelector(`.carousel-btn.prev[data-target="${rowId}"]`);
+
+  return new Swiper(`#${rowId}`, {
+    slidesPerView: 1.1,
+    spaceBetween: 16,
+    loop,
+    keyboard: { enabled: true },
+    a11y: { enabled: true },
+    breakpoints: {
+      576: { slidesPerView: 2.2, spaceBetween: 16 },
+      768: { slidesPerView: 3,   spaceBetween: 16 },
+      992: { slidesPerView: 4,   spaceBetween: 16 }
+    },
+    navigation: (nextEl && prevEl) ? { nextEl, prevEl } : undefined,
+    pagination: { el: container.querySelector('.swiper-pagination'), clickable: true }
+  });
+}
+
+/* ---- Render Perfumería (con Swiper) ---- */
 function renderPerfumeria({ subcat='*', aroma='*' } = {}){
   const container = document.getElementById('perfumeria-groups');
   if (!container) return;
@@ -144,7 +170,7 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
   if (subcat !== '*') list = list.filter(p => p.subcat === subcat);
   if (aroma !== '*')  list = list.filter(p => (p.aromas || []).indexOf(aroma) !== -1);
 
-  // agrupar por subcat (compat total)
+  // agrupar por subcat
   const groups = {};
   for (const p of list) {
     const key = p.subcat || 'Otros';
@@ -163,31 +189,54 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
     return `
       <h3 class="subcat-heading mb-3 animate-fadeUp">${key}</h3>
       <div class="carousel-row mb-4">
-        <button class="carousel-btn prev" aria-label="Anterior" data-target="${rowId}">
+        <button class="carousel-btn prev" aria-label="Anterior" data-target="${rowId}" aria-controls="${rowId}">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <div class="products-row" id="${rowId}">
-          ${items.map((p,i) => cardProductHTML(p,i)).join('')}
+
+        <div class="products-row swiper" id="${rowId}">
+          <div class="swiper-wrapper">
+            ${items.map((p,i) => `
+              <div class="swiper-slide">
+                ${cardProductHTML(p,i)}
+              </div>
+            `).join('')}
+          </div>
+          <div class="swiper-pagination" aria-hidden="true"></div>
         </div>
-        <button class="carousel-btn next" aria-label="Siguiente" data-target="${rowId}">
+
+        <button class="carousel-btn next" aria-label="Siguiente" data-target="${rowId}" aria-controls="${rowId}">
           <i class="bi bi-chevron-right"></i>
         </button>
       </div>
     `;
   }).join('') || '<p class="text-muted">No hay productos para el filtro seleccionado.</p>';
 
-  initRowNavButtons();
+  // Inicializar cada fila Swiper
+  ordered.forEach(key => initSwiperForRow(`row-${slug(key)}`, { loop:false }));
   watchReveals(container);
 }
 
-/* ---- Card producto ----- */
-function cardProductHTML(p, i=0){
-  const aromaBadges = (p.aromas||[]).map(a => `<span class="badge badge-aroma me-1 mb-1">${a}</span>`).join('');
+/* ---- Card producto (performance + a11y) ----- */
+function cardProductHTML(p, i = 0) {
+  const aromaBadges = (p.aromas || [])
+    .map(a => `<span class="badge badge-aroma me-1 mb-1">${a}</span>`)
+    .join('');
   const delay = (0.04 * i).toFixed(2);
+
   return `
     <div class="card product shadow-sm reveal" style="animation-delay:${delay}s">
       <div class="img-wrap">
-        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <img
+  src="${p.img}"
+  alt="${p.name}"
+  loading="lazy"
+  decoding="async"
+  width="600" height="800"
+  sizes="(max-width: 575.98px) 78vw,
+         (max-width: 991.98px) 44vw,
+         300px"
+  ${i === 0 ? 'fetchpriority="high"' : ''}
+/>
       </div>
       <div class="card-body">
         <div class="d-flex flex-wrap gap-1 mb-1">
@@ -198,76 +247,37 @@ function cardProductHTML(p, i=0){
         <div class="price fw-bold">$ ${p.price.toLocaleString('es-AR')}</div>
       </div>
       <div class="card-footer bg-transparent border-0 pt-0">
-        <button class="btn btn-brand w-100" data-add="${p.id}">Agregar</button>
+        <button class="btn btn-brand w-100" data-add="${p.id}" aria-label="Agregar ${p.name} al carrito">
+          Agregar
+        </button>
       </div>
     </div>
   `;
 }
 
-/* ---- Flechas carrusel ---- */
-function initRowNavButtons(){
-  document.querySelectorAll('.carousel-btn').forEach(btn=>{
-    const targetId = btn.getAttribute('data-target');
-    const row = document.getElementById(targetId);
-    if(!row) return;
-
-    const step = () => {
-      const card = row.querySelector('.card.product');
-      const val = card ? card.getBoundingClientRect().width + 16 : row.clientWidth * 0.8;
-      return Math.max(200, Math.min(val, 420));
-    };
-
-    const updateDisabled = () => {
-      btn.closest('.carousel-row').querySelectorAll('.carousel-btn').forEach(b=>{
-        const r = document.getElementById(b.getAttribute('data-target'));
-        b.disabled = (b.classList.contains('prev') && r.scrollLeft <= 1)
-                  || (b.classList.contains('next') && r.scrollLeft + r.clientWidth >= r.scrollWidth - 1);
-      });
-    };
-    updateDisabled();
-    row.addEventListener('scroll', updateDisabled, { passive:true });
-
-    btn.addEventListener('click', ()=>{
-      row.scrollBy({ left: btn.classList.contains('prev') ? -step() : step(), behavior:'smooth' });
-    });
-  });
-}
-
-/* ---- Carruseles simples ---- */
+/* ---- Carruseles simples (Cuidados / Maquillaje / Regalos) ---- */
 function renderCarouselSimple(rowId, items){
-  const row = document.getElementById(rowId);
-  if(!row) return;
-  row.innerHTML = items.map((p,i) => cardProductHTML({
-    ...p, category:'otros', aromas:[], subcat:p.subcat || '—', price:p.price || 0
-  }, i)).join('');
-  watchReveals(row);
-}
+  const host = document.getElementById(rowId);
+  if(!host) return;
 
-/* helper attachRowNav */
-function attachRowNav(rowId){
-  document.querySelectorAll(`.carousel-btn[data-target="${rowId}"]`).forEach(btn=>{
-    const row = document.getElementById(rowId);
-    if(!row) return;
+  host.classList.add('swiper', 'products-row');
+  host.setAttribute('aria-live', 'polite');
 
-    const step = () => {
-      const card = row.querySelector('.card.product');
-      const val  = card ? card.getBoundingClientRect().width + 16 : row.clientWidth * 0.8;
-      return Math.max(200, Math.min(val, 420));
-    };
-    const updateDisabled = () => {
-      btn.closest('.carousel-row').querySelectorAll('.carousel-btn').forEach(b=>{
-        const r = document.getElementById(b.getAttribute('data-target'));
-        b.disabled = (b.classList.contains('prev') && r.scrollLeft <= 1)
-                  || (b.classList.contains('next') && r.scrollLeft + r.clientWidth >= r.scrollWidth - 1);
-      });
-    };
-    updateDisabled();
-    row.addEventListener('scroll', updateDisabled, { passive:true });
+  host.innerHTML = `
+    <div class="swiper-wrapper">
+      ${items.map((p,i) => `
+        <div class="swiper-slide">
+          ${cardProductHTML({
+            ...p, category:'otros', aromas:[], subcat:p.subcat || '—', price:p.price || 0
+          }, i)}
+        </div>
+      `).join('')}
+    </div>
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  `;
 
-    btn.addEventListener('click', ()=>{
-      row.scrollBy({ left: btn.classList.contains('prev') ? -step() : step(), behavior:'smooth' });
-    });
-  });
+  initSwiperForRow(rowId, { loop:false });
+  watchReveals(host);
 }
 
 /* ---- Reveal on Scroll (solo cards) ---- */
@@ -290,26 +300,55 @@ const searchForm = document.querySelector('form[role="search"]');
 if (searchForm) {
   searchForm.addEventListener('submit', (e)=>{
     e.preventDefault();
+
     const input = document.getElementById('searchProducts');
     const q = (input && input.value ? input.value : '').toLowerCase().trim();
-    if(!q){ renderPerfumeria(currentFilters); return; }
+
+    if(!q){ 
+      renderPerfumeria(currentFilters); 
+      return; 
+    }
+
+    // limpiar estado de filtros al buscar 
+    document.querySelectorAll('#perfumeria [data-subcat]').forEach(b=>{
+      b.classList.remove('active');
+      b.setAttribute('aria-pressed','false');
+    });
+
+    // resultados
     currentFilters.subcat='*';
     const filtered = products.filter(p =>
       p.category==='perfumeria' &&
       (p.name.toLowerCase().includes(q) || ((p.subcat||'').toLowerCase().includes(q)))
     );
+
     const container = document.getElementById('perfumeria-groups');
     const rowId = 'row-search';
     container.innerHTML = `
       <h3 class="subcat-heading animate-fadeUp">Resultados</h3>
       <div class="carousel-row">
-        <button class="carousel-btn prev" data-target="${rowId}"><i class="bi bi-chevron-left"></i></button>
-        <div class="products-row" id="${rowId}">
-          ${filtered.map((p,i) => cardProductHTML(p,i)).join('')}
+        <button class="carousel-btn prev" data-target="${rowId}" aria-controls="${rowId}" aria-label="Anterior resultados">
+          <i class="bi bi-chevron-left" aria-hidden="true"></i>
+        </button>
+
+        <div class="products-row swiper" id="${rowId}">
+        role="region" aria-roledescription="carousel" aria-label="Carrusel de resultados"
+          <div class="swiper-wrapper">
+            ${filtered.map((p,i) => `
+              <div class="swiper-slide">
+                ${cardProductHTML(p,i)}
+              </div>
+            `).join('')}
+          </div>
+          <div class="swiper-pagination" aria-hidden="true"></div>
         </div>
-        <button class="carousel-btn next" data-target="${rowId}"><i class="bi bi-chevron-right"></i></button>
+
+        <button class="carousel-btn next" data-target="${rowId}" aria-controls="${rowId}" aria-label="Siguiente resultados">
+          <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>`;
-    initRowNavButtons();
+
+    initSwiperForRow(rowId, { loop:false });
     watchReveals(container);
   });
 }
@@ -342,7 +381,7 @@ document.addEventListener('click', (e)=>{
 document.getElementById('btnClearCart')?.addEventListener('click', ()=>{ cart=[]; updateCart(); });
 
 /* ---- CHECKOUT POR WHATSAPP ----*/
-const WHATSAPP_PHONE = '5491151039074'; // <--- tu número
+const WHATSAPP_PHONE = '5491151039074'; 
 
 const formatAR = n => "$ " + Number(n).toLocaleString('es-AR');
 const cartTotal = () => cart.reduce((s,p) => s + Number(p.price||0), 0);
@@ -431,28 +470,39 @@ document.getElementById('btnCheckout')?.addEventListener('click', checkoutViaWha
 
 /* ---- Inicio ---- */
 document.addEventListener('DOMContentLoaded', ()=>{
-  // Filtros perfumería
+
+
+  // Filtros perfumería (accesibles)
   document.querySelectorAll('#perfumeria [data-subcat]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      document.querySelectorAll('#perfumeria [data-subcat]').forEach(b=>b.classList.remove('active'));
+      // limpiar estado visual + accesible
+      document.querySelectorAll('#perfumeria [data-subcat]').forEach(b=>{
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed','false');
+      });
+
+      // activar botón clickeado
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed','true');
+
+      // aplicar filtro
       currentFilters.subcat = btn.dataset.subcat;
       renderPerfumeria(currentFilters);
     });
   });
-  document.querySelectorAll('#aromaMenu [data-aroma]').forEach(item=>{
-    item.addEventListener('click', ()=>{
-      currentFilters.aroma = item.dataset.aroma;
-      renderPerfumeria(currentFilters);
-    });
+
+  // Filtro por aroma 
+document.querySelectorAll('#aromaMenu [data-aroma]').forEach(item=>{
+  item.addEventListener('click', (e)=>{
+    currentFilters.aroma = item.dataset.aroma;
+    renderPerfumeria(currentFilters);
   });
+});
+
 
   // Pintar contenido
   renderPerfumeria();
   renderCarouselSimple('row-cuidados',   productosCuidados);
   renderCarouselSimple('row-maquillaje', productosMaquillaje);
   renderCarouselSimple('row-regalos',    productosRegalos);
-  attachRowNav('row-cuidados');
-  attachRowNav('row-maquillaje');
-  attachRowNav('row-regalos');
 });
