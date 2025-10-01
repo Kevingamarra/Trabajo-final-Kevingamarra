@@ -133,13 +133,22 @@ function applyTitleAnimations(){
   const SELECTORS = ['.section-title','h1','h2','h3','h4'];
   document.querySelectorAll(SELECTORS.join(',')).forEach(el=>{
     if (el.classList.contains('no-anim')) return;
-    el.classList.add('wow','animate__animated','animate__fadeInUp');
-    el.setAttribute('data-wow-duration', el.getAttribute('data-wow-duration') || '0.8s');
-    el.setAttribute('data-wow-offset',   el.getAttribute('data-wow-offset')   || '80');
+    // Evitá disparo inmediato
+    el.classList.remove('animate__animated','animated');
+    // WOW controla cuándo agrega 'animate__animated'
+    el.classList.add('wow','animate__fadeInUp');
+    if (!el.hasAttribute('data-wow-duration')) el.setAttribute('data-wow-duration','0.8s');
+    if (!el.hasAttribute('data-wow-offset'))   el.setAttribute('data-wow-offset','10');
   });
-  // WOW init (idempotente)
+
   if (!window.__wowInit && typeof WOW !== 'undefined'){
-    new WOW({ mobile:false, live:false, offset:80 }).init();
+    new WOW({
+      boxClass: 'wow',
+      animateClass: 'animate__animated', 
+      offset: 10,
+      mobile: true,
+      live: false
+    }).init();
     window.__wowInit = true;
   }
 }
