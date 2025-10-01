@@ -281,3 +281,7 @@ header.navbar .container{
   max-height: calc(var(--nav-h) - 18px);
   width: auto;
 }
+
+/* WOW + Animate.css v4: oculto hasta animar */
+.wow{ visibility: hidden; }
+.wow.animate__animated{ visibility: visible; }

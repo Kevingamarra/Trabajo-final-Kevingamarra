@@ -133,26 +133,37 @@ function applyTitleAnimations(){
   const SELECTORS = ['.section-title','h1','h2','h3','h4'];
   document.querySelectorAll(SELECTORS.join(',')).forEach(el=>{
     if (el.classList.contains('no-anim')) return;
-    // Evitá disparo inmediato
     el.classList.remove('animate__animated','animated');
-    // WOW controla cuándo agrega 'animate__animated'
     el.classList.add('wow','animate__fadeInUp');
     if (!el.hasAttribute('data-wow-duration')) el.setAttribute('data-wow-duration','0.8s');
     if (!el.hasAttribute('data-wow-offset'))   el.setAttribute('data-wow-offset','10');
   });
 
-  if (!window.__wowInit && typeof WOW !== 'undefined'){
-    new WOW({
-      boxClass: 'wow',
-      animateClass: 'animate__animated', 
-      offset: 10,
-      mobile: true,
-      live: false
-    }).init();
-    window.__wowInit = true;
+  if (typeof WOW !== 'undefined'){
+    if (!window.__wowInstance){
+      window.__wowInstance = new WOW({
+        boxClass: 'wow',
+        animateClass: 'animate__animated',
+        offset: 10,
+        mobile: true,
+        live: false
+      });
+      window.__wowInstance.init();
+    } else {
+      window.__wowInstance.sync && window.__wowInstance.sync();
+    }
+
+    // Forzar animación para elementos ya en viewport 
+    requestAnimationFrame(()=>{
+      document.querySelectorAll('.wow').forEach(el=>{
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight - 10){
+          el.classList.add('animate__animated'); 
+        }
+      });
+    });
   }
 }
-
 /* ---- Swiper: inicializador por fila (sin huecos) ---- */
 function initSwiperForRow(rowId, { loop = false } = {}) {
   const container = document.getElementById(rowId);
