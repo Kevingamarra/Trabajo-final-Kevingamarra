@@ -20,3 +20,22 @@
 @media (hover: none) and (pointer: coarse) {
   .navbar .nav-link:hover { text-decoration: none; text-shadow: none; }
 }
+
+/* ---- Navbar sticky ---- */
+:root { --nav-h: 64px; } 
+
+.navbar,
+.navbar.sticky-top,
+.sticky-top,
+.navbar.fixed-top,
+.fixed-top {
+  position: sticky !important;
+  top: 0;
+  z-index: 1000;
+  background: #d71d5c; 
+}
+
+body { padding-top: 0 !important; }
+
+/* Anclas (#seccion) no quedan tapadas por el nav */
+section, .section { scroll-margin-top: var(--nav-h); }
