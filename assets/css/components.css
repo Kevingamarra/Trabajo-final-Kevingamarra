@@ -122,3 +122,30 @@ section, .section { scroll-margin-top: var(--nav-h); }
 /* Wrapper en fila con gap */
 .products-row .swiper-wrapper { display: flex; gap: 1rem; }
 
+/* --- FIX carruseles: altura auto + card sin fondo negro --- */
+
+/* Que el contenedor y cada slide midan según su contenido */
+.products-row.swiper { height: auto; }
+.products-row .swiper-wrapper { align-items: stretch; }
+.products-row .swiper-slide { width: auto; height: auto; }
+
+/* La card no debe estirarse arbitrariamente */
+.card.product { height: auto; }
+
+/* Volver el body de la card a transparente y aprovechar el espacio */
+.card.product .card-body {
+  background: transparent;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+/* El botón queda pegado abajo sin dejar huecos raros */
+.card.product .card-footer { margin-top: auto; }
+
+.card.product .price {
+  color: #d71d5c;       
+  text-decoration: none;
+  font-weight: 800;
+}
