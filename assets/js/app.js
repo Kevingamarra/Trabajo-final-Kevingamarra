@@ -550,8 +550,11 @@ function checkoutViaWhatsApp(){
 document.addEventListener('DOMContentLoaded', ()=>{
   // Animación en TODOS los títulos (WOW + Animate.css)
   applyTitleAnimations();
-// SOLO móvil: autoplay del HERO
-mobileHeroAutoplay();
+
+  // SOLO móvil: autoplay del HERO (a prueba de fallos)
+  if (typeof mobileHeroAutoplay === 'function') {
+    try { mobileHeroAutoplay(); } catch (_) {}
+  }
 
   // Filtros perfumería (accesibles)
   document.querySelectorAll('#perfumeria [data-subcat]').forEach(btn=>{
