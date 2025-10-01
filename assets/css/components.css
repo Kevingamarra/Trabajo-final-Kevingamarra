@@ -74,18 +74,25 @@ nav.navbar[class*="bg-"],
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(188,54,98)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+/* Contenedor: altura fija y centrado vertical (FIX) */
+header.navbar .container{
+  min-height: var(--nav-h);
+  display: flex;
+  align-items: center;
+}
+
 
 /* ---CARRUSELES (Swiper) + CARDS---*/
 
-/* Tamaños de slide por breakpoint */
+/* Tamaños de slide por breakpoint (usar width, no min-width) */
 @media (max-width: 575.98px) {
-  .products-row .swiper-slide { min-width: 78vw; }
+  .products-row .swiper-slide { width: 78vw; }
 }
 @media (min-width: 576px) and (max-width: 991.98px) {
-  .products-row .swiper-slide { min-width: 44vw; }
+  .products-row .swiper-slide { width: 44vw; }
 }
 @media (min-width: 992px) {
-  .products-row .swiper-slide { min-width: 260px; max-width: 300px; }
+  .products-row .swiper-slide { width: clamp(260px, 28vw, 300px); }
 }
 
 /* Contenedor de carrusel */
@@ -121,20 +128,41 @@ nav.navbar[class*="bg-"],
   height: auto !important;
 }
 
-/* Wrapper en fila con gap y altura uniforme entre slides */
+/* Wrapper en fila SIN gap (lo maneja Swiper con spaceBetween) */
 .products-row .swiper-wrapper {
   display: flex;
-  gap: 1rem;
   align-items: stretch;
   will-change: transform;
 }
 
-/* Cada slide es flex para que la card pueda crecer */
-.products-row .swiper-slide { display: flex; }
+/* Cada slide es flex y con altura auto */
+.products-row .swiper-slide {
+  display: flex;
+  box-sizing: border-box;
+  height: auto;
+}
+
+/* Card dentro del slide */
 .products-row .swiper-slide > .card.product {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+}
+
+/* --- Imagen con alto uniforme para alinear cards --- */
+.card.product .img-wrap{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;     
+  overflow: hidden;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+.card.product .img-wrap img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* --- Cards: compactas y sin huecos --- */
@@ -181,6 +209,7 @@ nav.navbar[class*="bg-"],
 /* Botón abajo, sin dejar huecos arriba */
 .card.product .card-footer { margin-top: auto; }
 
+
 /* ---ANIMACIONES (custom)---*/
 
 /* Fade Up suave (para textos secundarios, etc.) */
@@ -220,4 +249,21 @@ nav.navbar[class*="bg-"],
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* --- Navbar: tamaño de logo y marca (fix) --- */
+.navbar .navbar-brand{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 1rem;     
+  line-height: 1;
+}
+
+.navbar .navbar-brand img{
+  height: 36px;
+  max-height: calc(var(--nav-h) - 18px);
+  width: auto;
 }

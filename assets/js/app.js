@@ -144,7 +144,7 @@ function applyTitleAnimations(){
   }
 }
 
-/* ---- Swiper: inicializador por fila ---- */
+/* ---- Swiper: inicializador por fila (sin huecos) ---- */
 function initSwiperForRow(rowId, { loop = false } = {}) {
   const container = document.getElementById(rowId);
   if (!container) return null;
@@ -159,7 +159,14 @@ function initSwiperForRow(rowId, { loop = false } = {}) {
     slidesPerView: 'auto',
     spaceBetween: 16,
     loop,
-    autoHeight: true,
+
+    // <<< CLAVES para que no quede espacio en productos
+    autoHeight: false,
+    slidesOffsetBefore: 0,
+    slidesOffsetAfter: 0,
+    roundLengths: true,
+    // >>>
+
     watchOverflow: true,
 
     observer: true,
