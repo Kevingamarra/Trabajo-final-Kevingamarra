@@ -320,13 +320,16 @@ header.navbar .container{
   }
 }
 
-/* Mobile: imagen de producto más chica */
+/* Mobile: imagen de producto más chica (3:4) */
 @media (max-width: 575.98px){
   .card.product .img-wrap{
-    aspect-ratio: 1 / 1 !important;   
+    aspect-ratio: 3 / 4 !important; 
+    width: 92%;
+    margin: .5rem auto 0;
   }
   .card.product .img-wrap img{
-    object-fit: cover;                
+    object-fit: cover;
     object-position: center;
   }
 }
+
