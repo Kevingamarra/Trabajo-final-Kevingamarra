@@ -91,7 +91,7 @@ section, .section { scroll-margin-top: var(--nav-h); }
 /* Logo */
 .navbar .navbar-brand img { height: 36px; width: auto; }
 
-/* Carruseles (Swiper)*/
+/* ===== Carruseles (Swiper) + Cards compactas ===== */
 
 /* Flechas superpuestas + alineado */
 .carousel-row {
@@ -112,51 +112,78 @@ section, .section { scroll-margin-top: var(--nav-h); }
 .carousel-row .carousel-btn.prev { left: .25rem; }
 .carousel-row .carousel-btn.next { right: .25rem; }
 
-/* Track ocupa todo el ancho y NO corta sombras/contenido */
+/* El track ocupa todo el ancho y no corta sombras */
 .products-row.swiper {
   width: 100%;
   margin: 0 !important;
-  overflow: visible;             
+  overflow: visible;
   height: auto !important;
 }
 
-/* Wrapper en fila con gap y ALTURA UNIFORME */
+/* Wrapper en fila con gap y altura uniforme entre slides */
 .products-row .swiper-wrapper {
   display: flex;
   gap: 1rem;
-  align-items: stretch;
+  align-items: stretch;          
 }
 
-/* Slides flex para que la card pueda crecer a todo el alto */
-.products-row .swiper-slide {
-  display: flex;
-}
+/* Cada slide es flex para que la card pueda crecer */
+.products-row .swiper-slide { display: flex; }
 .products-row .swiper-slide > .card.product {
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Alturas mínimas para que badges/títulos no muevan el precio */
-.card.product .badge-row { min-height: 28px; }
-.card.product .title { min-height: 2.4em; } 
-
-/* Card sin fondo negro y sin estirarse */
+/* --- Cards: compactas y sin huecos --- */
 .card.product { height: auto; }
+
 .card.product .card-body {
   background: transparent;
   color: #222;
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  gap: .35rem;                      
+  padding: .75rem .9rem .5rem;      
 }
-.card.product .card-footer { margin-top: auto; }
 
-/* Espacios reservados para que no salte el layout */
-.badge-row { min-height: 28px; }     
-.card.product .title { min-height: 2.4em; } 
+/* Fila de badges sin reservar altura extra */
+.card.product .badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+  min-height: 28px;                    
+}
 
-/* Precio */
+/* Título: máx. 2 líneas + alto uniforme (cross-browser) */
+.card.product .title {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;           
+  overflow: hidden;
+
+  /* La clave para que TODAS las cards reserven el mismo alto */
+  line-height: 1.2;
+  min-height: calc(1.2em * 2);
+  max-height: calc(1.2em * 2);
+}
+
+
+/* Precio pegado al bloque de texto */
 .card.product .price {
+  margin-top: .25rem;
   color: #d71d5c;
   text-decoration: none;
   font-weight: 800;
 }
+
+/* Botón abajo, sin dejar huecos arriba */
+.card.product .card-footer { margin-top: auto; }
+
+/* Uniformar alto de las cards dentro del slide */
+.products-row .swiper-slide { display: flex; }
+.products-row .swiper-slide > .card.product { flex: 1 1 auto; }
+
+

@@ -244,20 +244,22 @@ function cardProductHTML(p, i = 0) {
         />
       </div>
       <div class="card-body">
-        <!-- ⬇️ ahora con badge-row para fijar altura -->
-        <div class="badge-row d-flex flex-wrap gap-1 mb-1">
-          <span class="badge-subcat">${p.subcat || 'Otros'}</span>
-          ${aromaBadges}
-        </div>
+  <!-- badge-row sigue igual; podés quitar gap-1 si querés -->
+  <div class="badge-row d-flex flex-wrap mb-1">
+    <span class="badge-subcat">${p.subcat || 'Otros'}</span>
+    ${aromaBadges}
+  </div>
 
-        <h3 class="title mb-1">${p.name}</h3>
-        <div class="price fw-bold">$ ${Number(p.price || 0).toLocaleString('es-AR')}</div>
-      </div>
-      <div class="card-footer bg-transparent border-0 pt-0">
-        <button class="btn btn-brand w-100" data-add="${p.id}" aria-label="Agregar ${p.name} al carrito">
-          Agregar
-        </button>
-      </div>
+  <!-- título sin margen inferior extra -->
+  <h3 class="title mb-0">${p.name}</h3>
+
+  <div class="price fw-bold">$ ${Number(p.price || 0).toLocaleString('es-AR')}</div>
+</div>
+<div class="card-footer bg-transparent border-0 pt-0">
+  <button class="btn btn-brand w-100" data-add="${p.id}" aria-label="Agregar ${p.name} al carrito">
+    Agregar
+  </button>
+</div>
     </div>
   `;
 }
