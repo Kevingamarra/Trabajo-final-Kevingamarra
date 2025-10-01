@@ -25,7 +25,7 @@ const productosHumorFem = [
   { id:'pf5', name:'Humor Própria',      price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-5.jpg',  category:'perfumeria', subcat:'Humor', aromas:['Frutal'] },
   { id:'hu1', name:'Humor Beijo',        price:11999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-9.jpg',  category:'perfumeria', subcat:'Humor', aromas:['Frutal','Dulce'] },
   { id:'hu2', name:'Humor Transforma',   price:12499, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-10.jpg', category:'perfumeria', subcat:'Humor', aromas:['Floral','Amaderado'] },
-  { id:'hu3', name:'Humor Meu Primeiro', price:12999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-11.jpg', category:'perfumeria', subcat:'Humor', aromas:['Oriental'] },
+  { id:'hu3', name:'Humor Meu Primero',  price:12999, img:'assets/img/productos/perfumeria/femenina/perfumeria-femenina-11.jpg', category:'perfumeria', subcat:'Humor', aromas:['Oriental'] },
 ];
 
 // ---- LUNA ----
@@ -129,6 +129,21 @@ const productosRegalos = [
 /* ---- Utilidades ----*/
 const slug = s => (s || 'otros').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
 
+function applyTitleAnimations(){
+  const SELECTORS = ['.section-title','h1','h2','h3','h4'];
+  document.querySelectorAll(SELECTORS.join(',')).forEach(el=>{
+    if (el.classList.contains('no-anim')) return;
+    el.classList.add('wow','animate__animated','animate__fadeInUp');
+    el.setAttribute('data-wow-duration', el.getAttribute('data-wow-duration') || '0.8s');
+    el.setAttribute('data-wow-offset',   el.getAttribute('data-wow-offset')   || '80');
+  });
+  // WOW init (idempotente)
+  if (!window.__wowInit && typeof WOW !== 'undefined'){
+    new WOW({ mobile:false, live:false, offset:80 }).init();
+    window.__wowInit = true;
+  }
+}
+
 /* ---- Swiper: inicializador por fila ---- */
 function initSwiperForRow(rowId, { loop = false } = {}) {
   const container = document.getElementById(rowId);
@@ -141,13 +156,12 @@ function initSwiperForRow(rowId, { loop = false } = {}) {
   const paginationEl = container.querySelector('.swiper-pagination');
 
   return new Swiper(`#${rowId}`, {
-    slidesPerView: 'auto',    
+    slidesPerView: 'auto',
     spaceBetween: 16,
     loop,
-    autoHeight: true,         
+    autoHeight: true,
     watchOverflow: true,
 
-    // Hace que Swiper re-calibre al cambiar tamaños/DOM
     observer: true,
     observeParents: true,
     resizeObserver: true,
@@ -196,11 +210,12 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
     return `
       <h3 class="subcat-heading mb-3 animate-fadeUp">${key}</h3>
       <div class="carousel-row mb-4">
-        <button class="carousel-btn prev" aria-label="Anterior" data-target="${rowId}" aria-controls="${rowId}">
-          <i class="bi bi-chevron-left"></i>
+        <button class="carousel-btn prev" aria-label="Anterior ${key}" data-target="${rowId}" aria-controls="${rowId}">
+          <i class="bi bi-chevron-left" aria-hidden="true"></i>
         </button>
 
-        <div class="products-row swiper" id="${rowId}">
+        <div class="products-row swiper" id="${rowId}"
+             role="region" aria-roledescription="carousel" aria-label="Carrusel de ${key}">
           <div class="swiper-wrapper">
             ${items.map((p,i) => `
               <div class="swiper-slide">
@@ -211,8 +226,8 @@ function renderPerfumeria({ subcat='*', aroma='*' } = {}){
           <div class="swiper-pagination" aria-hidden="true"></div>
         </div>
 
-        <button class="carousel-btn next" aria-label="Siguiente" data-target="${rowId}" aria-controls="${rowId}">
-          <i class="bi bi-chevron-right"></i>
+        <button class="carousel-btn next" aria-label="Siguiente ${key}" data-target="${rowId}" aria-controls="${rowId}">
+          <i class="bi bi-chevron-right" aria-hidden="true"></i>
         </button>
       </div>
     `;
@@ -244,22 +259,18 @@ function cardProductHTML(p, i = 0) {
         />
       </div>
       <div class="card-body">
-  <!-- badge-row sigue igual; podés quitar gap-1 si querés -->
-  <div class="badge-row d-flex flex-wrap mb-1">
-    <span class="badge-subcat">${p.subcat || 'Otros'}</span>
-    ${aromaBadges}
-  </div>
-
-  <!-- título sin margen inferior extra -->
-  <h3 class="title mb-0">${p.name}</h3>
-
-  <div class="price fw-bold">$ ${Number(p.price || 0).toLocaleString('es-AR')}</div>
-</div>
-<div class="card-footer bg-transparent border-0 pt-0">
-  <button class="btn btn-brand w-100" data-add="${p.id}" aria-label="Agregar ${p.name} al carrito">
-    Agregar
-  </button>
-</div>
+        <div class="badge-row d-flex flex-wrap mb-1">
+          <span class="badge-subcat">${p.subcat || 'Otros'}</span>
+          ${aromaBadges}
+        </div>
+        <h3 class="title mb-0">${p.name}</h3>
+        <div class="price fw-bold">$ ${Number(p.price || 0).toLocaleString('es-AR')}</div>
+      </div>
+      <div class="card-footer bg-transparent border-0 pt-0">
+        <button class="btn btn-brand w-100" data-add="${p.id}" aria-label="Agregar ${p.name} al carrito">
+          Agregar
+        </button>
+      </div>
     </div>
   `;
 }
@@ -271,6 +282,9 @@ function renderCarouselSimple(rowId, items){
 
   host.classList.add('swiper', 'products-row');
   host.setAttribute('aria-live', 'polite');
+  host.setAttribute('role', 'region');
+  host.setAttribute('aria-roledescription', 'carousel');
+  host.setAttribute('aria-label', `Carrusel de ${rowId.replace('row-','').replace('-', ' ')}`);
 
   host.innerHTML = `
     <div class="swiper-wrapper">
@@ -340,8 +354,7 @@ if (searchForm) {
           <i class="bi bi-chevron-left" aria-hidden="true"></i>
         </button>
 
-        <div class="products-row swiper" id="${rowId}">
-        role="region" aria-roledescription="carousel" aria-label="Carrusel de resultados"
+        <div class="products-row swiper" id="${rowId}" role="region" aria-roledescription="carousel" aria-label="Carrusel de resultados">
           <div class="swiper-wrapper">
             ${filtered.map((p,i) => `
               <div class="swiper-slide">
@@ -372,11 +385,11 @@ function updateCart(){
   if(!list) return;
   list.innerHTML = cart.map(p => `
     <li class="list-group-item d-flex justify-content-between align-items-center">
-      ${p.name} <span>$ ${p.price.toLocaleString('es-AR')}</span>
+      ${p.name} <span>$ ${Number(p.price).toLocaleString('es-AR')}</span>
     </li>
   `).join('');
   if (badge) badge.textContent = cart.length;
-  if (total) total.textContent = "$ " + cart.reduce((s,p)=>s+p.price,0).toLocaleString('es-AR');
+  if (total) total.textContent = "$ " + cart.reduce((s,p)=>s+Number(p.price||0),0).toLocaleString('es-AR');
 }
 document.addEventListener('click', (e)=>{
   const addBtn = e.target && e.target.closest ? e.target.closest('[data-add]') : null;
@@ -475,11 +488,10 @@ function checkoutViaWhatsApp(){
   window.open(url, '_blank');
 }
 
-document.getElementById('btnCheckout')?.addEventListener('click', checkoutViaWhatsApp);
-
 /* ---- Inicio ---- */
 document.addEventListener('DOMContentLoaded', ()=>{
-
+  // Animación en TODOS los títulos (WOW + Animate.css)
+  applyTitleAnimations();
 
   // Filtros perfumería (accesibles)
   document.querySelectorAll('#perfumeria [data-subcat]').forEach(btn=>{
@@ -501,13 +513,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
 
   // Filtro por aroma 
-document.querySelectorAll('#aromaMenu [data-aroma]').forEach(item=>{
-  item.addEventListener('click', (e)=>{
-    currentFilters.aroma = item.dataset.aroma;
-    renderPerfumeria(currentFilters);
+  document.querySelectorAll('#aromaMenu [data-aroma]').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      currentFilters.aroma = item.dataset.aroma;
+      renderPerfumeria(currentFilters);
+    });
   });
-});
-
 
   // Pintar contenido
   renderPerfumeria();

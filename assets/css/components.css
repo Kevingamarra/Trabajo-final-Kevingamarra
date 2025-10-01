@@ -1,33 +1,22 @@
 /* components.css — overrides responsivos por componente */
 
-/* --- Hero: en mobile asegurar 16/9 --- */
-@media (max-width: 575.98px) {
-  .hero-video .video-wrap { aspect-ratio: 16 / 9; }
-}
+/* ---VARIABLES / BASE ---*/
+:root { --nav-h: 68px; }
 
-/* --- Swiper/cards: tamaños de slide por breakpoint ---*/
-@media (max-width: 575.98px) {
-  .products-row .swiper-slide { min-width: 78vw; }
-}
-@media (min-width: 576px) and (max-width: 991.98px) {
-  .products-row .swiper-slide { min-width: 44vw; }
-}
-@media (min-width: 992px) {
-  .products-row .swiper-slide { min-width: 260px; max-width: 300px; }
-}
-
-/* ---Navbar en pantallas táctiles (evitar hover “pegado”) --- */
+/* Helpers de interacciones táctiles */
 @media (hover: none) and (pointer: coarse) {
   .navbar .nav-link:hover { text-decoration: none; text-shadow: none; }
 }
 
-/* --- NAVBAR: sticky + ROSA CLARO (#fed0e3) --- */
-:root { --nav-h: 68px; }
+/* Anclas (#seccion) no quedan tapadas por el nav */
+section, .section { scroll-margin-top: var(--nav-h); }
+
+/* ---NAVBAR: sticky + ROSA CLARO---*/
 
 /* Evitar que algún wrapper bloquee sticky */
 header, .site-header { overflow: visible !important; }
 
-/* Sticky sólido (pisa fixed-top/sticky-top si existieran) */
+/* Sticky sólido  */
 header.navbar,
 header.navbar.sticky-top,
 header.navbar.fixed-top,
@@ -85,19 +74,24 @@ nav.navbar[class*="bg-"],
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(188,54,98)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Anclas (#seccion) no quedan tapadas por el nav */
-section, .section { scroll-margin-top: var(--nav-h); }
 
-/* Logo */
-.navbar .navbar-brand img { height: 36px; width: auto; }
+/* ---CARRUSELES (Swiper) + CARDS---*/
 
-/* ===== Carruseles (Swiper) + Cards compactas ===== */
-
-/* Flechas superpuestas + alineado */
-.carousel-row {
-  position: relative;
-  display: block;
+/* Tamaños de slide por breakpoint */
+@media (max-width: 575.98px) {
+  .products-row .swiper-slide { min-width: 78vw; }
 }
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .products-row .swiper-slide { min-width: 44vw; }
+}
+@media (min-width: 992px) {
+  .products-row .swiper-slide { min-width: 260px; max-width: 300px; }
+}
+
+/* Contenedor de carrusel */
+.carousel-row { position: relative; display: block; }
+
+/* Flechas superpuestas + accesibles */
 .carousel-row .carousel-btn {
   position: absolute;
   top: 50%;
@@ -108,9 +102,16 @@ section, .section { scroll-margin-top: var(--nav-h); }
   color: #d71d5c;
   width: 40px; height: 40px; border-radius: 999px;
   display: grid; place-content: center;
+  transition: box-shadow .2s ease, transform .2s ease, background-color .2s ease;
 }
 .carousel-row .carousel-btn.prev { left: .25rem; }
 .carousel-row .carousel-btn.next { right: .25rem; }
+.carousel-row .carousel-btn:hover { box-shadow: 0 3px 10px rgba(0,0,0,.12); transform: translateY(-50%) scale(1.04); }
+.carousel-row .carousel-btn:focus-visible { outline: 2px solid #fed0e3; outline-offset: 2px; }
+.carousel-row .carousel-btn[disabled],
+.carousel-row .carousel-btn[aria-disabled="true"] {
+  opacity: .45; pointer-events: none;
+}
 
 /* El track ocupa todo el ancho y no corta sombras */
 .products-row.swiper {
@@ -124,7 +125,8 @@ section, .section { scroll-margin-top: var(--nav-h); }
 .products-row .swiper-wrapper {
   display: flex;
   gap: 1rem;
-  align-items: stretch;          
+  align-items: stretch;
+  will-change: transform;
 }
 
 /* Cada slide es flex para que la card pueda crecer */
@@ -143,8 +145,8 @@ section, .section { scroll-margin-top: var(--nav-h); }
   color: #222;
   display: flex;
   flex-direction: column;
-  gap: .35rem;                      
-  padding: .75rem .9rem .5rem;      
+  gap: .35rem;
+  padding: .75rem .9rem .5rem;
 }
 
 /* Fila de badges sin reservar altura extra */
@@ -152,7 +154,7 @@ section, .section { scroll-margin-top: var(--nav-h); }
   display: flex;
   flex-wrap: wrap;
   gap: .25rem;
-  min-height: 28px;                    
+  min-height: 28px; 
 }
 
 /* Título: máx. 2 líneas + alto uniforme (cross-browser) */
@@ -161,15 +163,12 @@ section, .section { scroll-margin-top: var(--nav-h); }
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  line-clamp: 2;           
+  line-clamp: 2;
   overflow: hidden;
-
-  /* La clave para que TODAS las cards reserven el mismo alto */
   line-height: 1.2;
   min-height: calc(1.2em * 2);
   max-height: calc(1.2em * 2);
 }
-
 
 /* Precio pegado al bloque de texto */
 .card.product .price {
@@ -182,8 +181,43 @@ section, .section { scroll-margin-top: var(--nav-h); }
 /* Botón abajo, sin dejar huecos arriba */
 .card.product .card-footer { margin-top: auto; }
 
-/* Uniformar alto de las cards dentro del slide */
-.products-row .swiper-slide { display: flex; }
-.products-row .swiper-slide > .card.product { flex: 1 1 auto; }
+/* ---ANIMACIONES (custom)---*/
 
+/* Fade Up suave (para textos secundarios, etc.) */
+@keyframes pb-fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeUp {
+  opacity: 0;
+  animation: pb-fadeUp .6s ease forwards;
+}
 
+/* FadeUp + ligero “wiggle” (para títulos destacados) */
+@keyframes pb-wiggle {
+  0%   { transform: translateY(0) rotate(0); }
+  30%  { transform: translateY(-1px) rotate(-0.4deg); }
+  60%  { transform: translateY(1px) rotate(0.4deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+.animate-fade-wiggle {
+  opacity: 0;
+  animation:
+    pb-fadeUp .6s ease forwards,
+    pb-wiggle .9s ease .6s 1 both;
+}
+
+/* Delays utilitarias */
+.anim-delay-03 { animation-delay: .3s !important; }
+.anim-delay-06 { animation-delay: .6s !important; }
+.anim-delay-09 { animation-delay: .9s !important; }
+
+/* Respeto por reduce-motion */
+@media (prefers-reduced-motion: reduce){
+  .animate-fadeUp,
+  .animate-fade-wiggle {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
