@@ -286,10 +286,14 @@ header.navbar .container{
 .wow { visibility: hidden; }
 .wow.animate__animated { visibility: visible; }
 
-/* Fuerza la animación incluso si el SO tiene reduce-motion */
+/* Forzar animación SOLO cuando tenga la clase `anim-force` */
 @media (prefers-reduced-motion: reduce){
-  .wow.animate__animated{
-    animation-duration: .8s !important;
-    animation-iteration-count: 1 !important;
+  .anim-force.animate-fadeUp{
+    animation: pb-fadeUp .6s ease forwards !important;
+  }
+  .anim-force.animate-fade-wiggle{
+    animation:
+      pb-fadeUp .6s ease forwards,
+      pb-wiggle .9s ease .6s 1 both !important;
   }
 }
