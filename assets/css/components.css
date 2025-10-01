@@ -90,3 +90,35 @@ section, .section { scroll-margin-top: var(--nav-h); }
 
 /* Logo */
 .navbar .navbar-brand img { height: 36px; width: auto; }
+
+/* Carrusel: flechas superpuestas + alineado */
+.carousel-row {
+  position: relative;
+  display: block;
+}
+
+.carousel-row .carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  border: 1px solid #d71d5c;
+  background: #fff;
+  color: #d71d5c;
+  width: 40px; height: 40px; border-radius: 999px;
+  display: grid; place-content: center;
+}
+
+.carousel-row .carousel-btn.prev { left: .25rem; }
+.carousel-row .carousel-btn.next { right: .25rem; }
+
+/* El track ocupa el ancho total y no se centra solo */
+.products-row.swiper {
+  width: 100%;
+  margin: 0 !important;  
+  overflow: hidden;
+}
+
+/* Wrapper en fila con gap */
+.products-row .swiper-wrapper { display: flex; gap: 1rem; }
+

@@ -129,29 +129,26 @@ const productosRegalos = [
 /* ---- Utilidades ----*/
 const slug = s => (s || 'otros').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
 
-/* ---- Swiper: inicializador por fila (usa TUS flechas) ---- */
-function initSwiperForRow(rowId, { loop=false } = {}) {
+/* ---- Swiper: inicializador por fila  ---- */
+function initSwiperForRow(rowId, { loop = false } = {}) {
   const container = document.getElementById(rowId);
-  if (!container) return;
+  if (!container) return null;
 
-  // flechas hermanas (las del HTML, dentro de .carousel-row)
+  // flechas hermanas dentro de .carousel-row
   const parent = container.closest('.carousel-row');
   const nextEl = parent?.querySelector(`.carousel-btn.next[data-target="${rowId}"]`);
   const prevEl = parent?.querySelector(`.carousel-btn.prev[data-target="${rowId}"]`);
+  const paginationEl = container.querySelector('.swiper-pagination');
 
   return new Swiper(`#${rowId}`, {
-    slidesPerView: 1.1,
+    slidesPerView: 'auto',       
     spaceBetween: 16,
     loop,
+    watchOverflow: true,
     keyboard: { enabled: true },
     a11y: { enabled: true },
-    breakpoints: {
-      576: { slidesPerView: 2.2, spaceBetween: 16 },
-      768: { slidesPerView: 3,   spaceBetween: 16 },
-      992: { slidesPerView: 4,   spaceBetween: 16 }
-    },
     navigation: (nextEl && prevEl) ? { nextEl, prevEl } : undefined,
-    pagination: { el: container.querySelector('.swiper-pagination'), clickable: true }
+    pagination: paginationEl ? { el: paginationEl, clickable: true } : undefined
   });
 }
 
