@@ -128,12 +128,26 @@ header.navbar .container{
   height: auto !important;
 }
 
+/* Swiper: paginación debajo del carrusel (solo mobile) */
+.products-row .swiper-pagination{
+  position: static !important;
+  margin-top: .5rem;
+  pointer-events: none;
+}
+.products-row .swiper-pagination .swiper-pagination-bullet{ opacity: .4; }
+.products-row .swiper-pagination .swiper-pagination-bullet-active{ opacity: 1; }
+
+@media (min-width: 992px){
+  .products-row .swiper-pagination{ display: none !important; }
+}
+
 /* Wrapper en fila SIN gap (lo maneja Swiper con spaceBetween) */
 .products-row .swiper-wrapper {
   display: flex;
   align-items: stretch;
   will-change: transform;
 }
+
 
 /* Cada slide es flex y con altura auto */
 .products-row .swiper-slide {
