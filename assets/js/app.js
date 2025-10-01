@@ -129,7 +129,7 @@ const productosRegalos = [
 /* ---- Utilidades ----*/
 const slug = s => (s || 'otros').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
 
-/* ---- Swiper: inicializador por fila  ---- */
+/* ---- Swiper: inicializador por fila ---- */
 function initSwiperForRow(rowId, { loop = false } = {}) {
   const container = document.getElementById(rowId);
   if (!container) return null;
@@ -141,12 +141,22 @@ function initSwiperForRow(rowId, { loop = false } = {}) {
   const paginationEl = container.querySelector('.swiper-pagination');
 
   return new Swiper(`#${rowId}`, {
-    slidesPerView: 'auto',       
+    slidesPerView: 'auto',    
     spaceBetween: 16,
     loop,
+    autoHeight: true,         
     watchOverflow: true,
+
+    // Hace que Swiper re-calibre al cambiar tamaños/DOM
+    observer: true,
+    observeParents: true,
+    resizeObserver: true,
+
+    centeredSlides: false,
+    slidesPerGroup: 1,
     keyboard: { enabled: true },
     a11y: { enabled: true },
+
     navigation: (nextEl && prevEl) ? { nextEl, prevEl } : undefined,
     pagination: paginationEl ? { el: paginationEl, clickable: true } : undefined
   });

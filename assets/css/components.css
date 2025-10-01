@@ -16,7 +16,7 @@
   .products-row .swiper-slide { min-width: 260px; max-width: 300px; }
 }
 
-/* ---Navbar en pantallas táctiles (evitar hover “pegado”) --- */
+/* ---Navbar en pantallas táctiles  --- */
 @media (hover: none) and (pointer: coarse) {
   .navbar .nav-link:hover { text-decoration: none; text-shadow: none; }
 }
@@ -27,7 +27,7 @@
 /* Evitar que algún wrapper bloquee sticky */
 header, .site-header { overflow: visible !important; }
 
-/* Sticky sólido (pisa fixed-top/sticky-top si existieran) */
+/* Sticky sólido */
 header.navbar,
 header.navbar.sticky-top,
 header.navbar.fixed-top,
@@ -91,12 +91,13 @@ section, .section { scroll-margin-top: var(--nav-h); }
 /* Logo */
 .navbar .navbar-brand img { height: 36px; width: auto; }
 
-/* Carrusel: flechas superpuestas + alineado */
+/* Carrusel (Swiper)  */
+
+/* Flechas superpuestas + alineado */
 .carousel-row {
   position: relative;
   display: block;
 }
-
 .carousel-row .carousel-btn {
   position: absolute;
   top: 50%;
@@ -108,31 +109,32 @@ section, .section { scroll-margin-top: var(--nav-h); }
   width: 40px; height: 40px; border-radius: 999px;
   display: grid; place-content: center;
 }
-
 .carousel-row .carousel-btn.prev { left: .25rem; }
 .carousel-row .carousel-btn.next { right: .25rem; }
 
 /* El track ocupa el ancho total y no se centra solo */
 .products-row.swiper {
   width: 100%;
-  margin: 0 !important;  
+  margin: 0 !important;
   overflow: hidden;
+  height: auto !important;                
 }
 
-/* Wrapper en fila con gap */
-.products-row .swiper-wrapper { display: flex; gap: 1rem; }
+/* Wrapper en fila con gap y alineado arriba (no stretch) */
+.products-row .swiper-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start !important;       
+}
 
-/* --- FIX carruseles: altura auto + card sin fondo negro --- */
+/* Cada slide mide lo que necesita */
+.products-row .swiper-slide {
+  width: auto;
+  height: auto !important;                  
+}
 
-/* Que el contenedor y cada slide midan según su contenido */
-.products-row.swiper { height: auto; }
-.products-row .swiper-wrapper { align-items: stretch; }
-.products-row .swiper-slide { width: auto; height: auto; }
-
-/* La card no debe estirarse arbitrariamente */
+/* Card sin fondo negro y sin estirarse */
 .card.product { height: auto; }
-
-/* Volver el body de la card a transparente y aprovechar el espacio */
 .card.product .card-body {
   background: transparent;
   color: #222;
@@ -140,12 +142,9 @@ section, .section { scroll-margin-top: var(--nav-h); }
   flex-direction: column;
   flex: 1 1 auto;
 }
-
-/* El botón queda pegado abajo sin dejar huecos raros */
 .card.product .card-footer { margin-top: auto; }
-
 .card.product .price {
-  color: #d71d5c;       
+  color: #d71d5c;
   text-decoration: none;
   font-weight: 800;
 }
