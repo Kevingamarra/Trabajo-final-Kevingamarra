@@ -1,11 +1,11 @@
 /* components.css — overrides responsivos por componente */
 
-/* Hero: en mobile asegurar 16/9  */
+/* --- Hero: en mobile asegurar 16/9 --- */
 @media (max-width: 575.98px) {
   .hero-video .video-wrap { aspect-ratio: 16 / 9; }
 }
 
-/* Swiper/cards: tamaños de slide por breakpoint*/
+/* --- Swiper/cards: tamaños de slide por breakpoint ---*/
 @media (max-width: 575.98px) {
   .products-row .swiper-slide { min-width: 78vw; }
 }
@@ -16,26 +16,53 @@
   .products-row .swiper-slide { min-width: 260px; max-width: 300px; }
 }
 
-/* Navbar en pantallas táctiles*/
+/* ---Navbar en pantallas táctiles (evitar hover “pegado”) --- */
 @media (hover: none) and (pointer: coarse) {
   .navbar .nav-link:hover { text-decoration: none; text-shadow: none; }
 }
 
-/* ---- Navbar sticky ---- */
+/* --- NAVBAR: sticky + ROSA CLARO de la paleta + contraste accesible --- */
 :root { --nav-h: 64px; } 
+/* Evitar que algún wrapper bloquee sticky */
+header, .site-header { overflow: visible !important; }
 
-.navbar,
-.navbar.sticky-top,
+/* Sticky SIEMPRE, aunque el HTML tenga fixed-top/sticky-top */
+nav.navbar,
+nav.navbar.sticky-top,
+nav.navbar.fixed-top,
 .sticky-top,
-.navbar.fixed-top,
 .fixed-top {
   position: sticky !important;
   top: 0;
   z-index: 1000;
-  background: #d71d5c; 
 }
 
-body { padding-top: 0 !important; }
+/* Fondo ROSA CLARO (paleta) + separador sutil */
+nav.navbar,
+nav.navbar[class*="bg-"] {
+  background-color: #fed0e3 !important;
+  background: #fed0e3 !important;
+  border-bottom: 1px solid #e085a4;     
+}
+/* Texto del navbar con buen contraste (paleta) */
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: #bc3662 !important;  
+  text-shadow: none !important;
+}
 
-/* Anclas (#seccion) no quedan tapadas por el nav */
-section, .section { scroll-margin-top: var(--nav-h); }
+/* Hover/focus/active con acento fucsia marca */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible,
+.navbar .nav-link.active {
+  color: #d71d5c !important;  /* fucsia */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  outline: 2px solid rgba(254, 208, 227, 0.8); 
+  outline-offset: 2px;
+}
+
+/* Sin padding-top de nav fijo anterior y anclas con margen */
+body { padding-top: 0 !important; }
+section, .section { scroll-margin-top: var(--nav-h);}
