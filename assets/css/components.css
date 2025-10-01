@@ -21,12 +21,13 @@
   .navbar .nav-link:hover { text-decoration: none; text-shadow: none; }
 }
 
-/* --- NAVBAR: sticky + ROSA CLARO de la paleta + contraste accesible --- */
-:root { --nav-h: 64px; } 
+/* --- NAVBAR: sticky + ROSA CLARO (#fed0e3) --- */
+:root { --nav-h: 68px; }
+
 /* Evitar que algún wrapper bloquee sticky */
 header, .site-header { overflow: visible !important; }
 
-/* Sticky */
+/* Sticky sólido (pisa fixed-top/sticky-top si existieran) */
 header.navbar,
 header.navbar.sticky-top,
 header.navbar.fixed-top,
@@ -40,7 +41,7 @@ nav.navbar.fixed-top,
   z-index: 1000;
 }
 
-/* Fondo ROSA CLARO y borde suave — pisa Bootstrap y theme */
+/* Fondo ROSA CLARO + borde sutil (pisa Bootstrap y theme) */
 header.navbar,
 header.navbar[class*="bg-"],
 nav.navbar,
@@ -49,17 +50,20 @@ nav.navbar[class*="bg-"],
   --bs-navbar-bg: #fed0e3 !important;
   background-color: #fed0e3 !important;
   background: #fed0e3 !important;
-  border-bottom: 1px solid #e085a4;     
+  border-bottom: 1px solid #e085a4;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  min-height: var(--nav-h);
+  padding-block: .5rem;
 }
 
 /* Texto con contraste de tu paleta */
 .navbar .navbar-brand,
 .navbar .nav-link {
-  color: #bc3662 !important;  
+  color: #bc3662 !important;
   text-shadow: none !important;
 }
 
-/* Hover/focus/active con acento fucsia */
+/* Hover/focus/active */
 .navbar .nav-link:hover,
 .navbar .nav-link:focus-visible,
 .navbar .nav-link.active {
@@ -67,10 +71,22 @@ nav.navbar[class*="bg-"],
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
-  outline: 2px solid rgba(254, 208, 227, 0.8); 
+  outline: 2px solid rgba(254, 208, 227, 0.8);
   outline-offset: 2px;
 }
 
-/* Sin padding-top de nav fijo anterior y anclas con margen */
-body { padding-top: 0 !important; }
+/* Controles */
+.navbar .form-control { height: 38px; }
+.navbar .btn { height: 38px; display: inline-flex; align-items: center; }
+
+/* Toggler coloreado (sin navbar-dark) */
+.navbar .navbar-toggler { border-color: #bc3662; }
+.navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(188,54,98)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Anclas (#seccion) no quedan tapadas por el nav */
 section, .section { scroll-margin-top: var(--nav-h); }
+
+/* Logo */
+.navbar .navbar-brand img { height: 36px; width: auto; }

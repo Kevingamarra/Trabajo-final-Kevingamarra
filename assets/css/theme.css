@@ -338,7 +338,7 @@ a {
 .products-row.swiper {
   width: 100%;
 }
-products-row .swiper-wrapper,
+
 .products-row .swiper-wrapper {
   display: flex;
   gap: 1rem;
