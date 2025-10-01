@@ -234,24 +234,24 @@ function cardProductHTML(p, i = 0) {
     <div class="card product shadow-sm reveal" style="animation-delay:${delay}s">
       <div class="img-wrap">
         <img
-  src="${p.img}"
-  alt="${p.name}"
-  loading="lazy"
-  decoding="async"
-  width="600" height="800"
-  sizes="(max-width: 575.98px) 78vw,
-         (max-width: 991.98px) 44vw,
-         300px"
-  ${i === 0 ? 'fetchpriority="high"' : ''}
-/>
+          src="${p.img}"
+          alt="${p.name}"
+          loading="lazy"
+          decoding="async"
+          width="600" height="800"
+          sizes="(max-width: 575.98px) 78vw, (max-width: 991.98px) 44vw, 300px"
+          ${i === 0 ? 'fetchpriority="high"' : ''}
+        />
       </div>
       <div class="card-body">
-        <div class="d-flex flex-wrap gap-1 mb-1">
+        <!-- ⬇️ ahora con badge-row para fijar altura -->
+        <div class="badge-row d-flex flex-wrap gap-1 mb-1">
           <span class="badge-subcat">${p.subcat || 'Otros'}</span>
           ${aromaBadges}
         </div>
+
         <h3 class="title mb-1">${p.name}</h3>
-        <div class="price fw-bold">$ ${p.price.toLocaleString('es-AR')}</div>
+        <div class="price fw-bold">$ ${Number(p.price || 0).toLocaleString('es-AR')}</div>
       </div>
       <div class="card-footer bg-transparent border-0 pt-0">
         <button class="btn btn-brand w-100" data-add="${p.id}" aria-label="Agregar ${p.name} al carrito">
