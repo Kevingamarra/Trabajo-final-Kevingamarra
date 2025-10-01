@@ -282,6 +282,14 @@ header.navbar .container{
   width: auto;
 }
 
-/* WOW + Animate.css v4: oculto hasta animar */
-.wow{ visibility: hidden; }
-.wow.animate__animated{ visibility: visible; }
+/* WOW + Animate.css v4: visibilidad y forzar animación aun con reduce-motion */
+.wow { visibility: hidden; }
+.wow.animate__animated { visibility: visible; }
+
+/* Fuerza la animación incluso si el SO tiene reduce-motion */
+@media (prefers-reduced-motion: reduce){
+  .wow.animate__animated{
+    animation-duration: .8s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
