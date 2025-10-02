@@ -407,3 +407,14 @@ header.navbar .container{
     opacity: 1 !important;          /* por si la animación no corre */
   }
 }
+/* Mobile: mostrar títulos de Perfumería / Cuidados / Maquillaje / Regalos */
+@media (max-width: 575.98px){
+  #perfumeria .section-title.wow,
+  #cuidados .section-title.wow,
+  #maquillaje .section-title.wow,
+  #regalos .section-title.wow{
+    visibility: visible !important;
+    opacity: 1 !important;
+    animation: none !important; /* por si WOW no dispara en mobile */
+  }
+}
