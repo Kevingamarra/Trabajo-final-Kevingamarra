@@ -383,3 +383,19 @@ header.navbar .container{
     object-position: center !important;
   }
 }
+
+/* Mobile: asegurar que el logo siempre se vea en la navbar */
+@media (max-width: 575.98px){
+  header.navbar .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* evita que el brand se esconda */
+    min-height: var(--nav-h);
+  }
+  .navbar .navbar-brand img{
+    display: block;
+    height: 32px !important;      /* fijo en mobile */
+    max-height: 32px !important;
+    width: auto !important;
+  }
+}
