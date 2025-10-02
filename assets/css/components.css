@@ -399,3 +399,11 @@ header.navbar .container{
     width: auto !important;
   }
 }
+
+/* Mobile: asegurar que se vean los títulos de la sección de info */
+@media (max-width: 575.98px){
+  .info-section .section-title.wow{
+    visibility: visible !important; /* anula el hidden inicial de WOW */
+    opacity: 1 !important;          /* por si la animación no corre */
+  }
+}
