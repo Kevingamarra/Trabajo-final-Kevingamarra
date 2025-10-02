@@ -372,8 +372,8 @@ header.navbar .container{
   .products-row .swiper-slide{ width: 78vw; } 
 
   .card.product .img-wrap{
-    aspect-ratio: 3 / 4 !important;
-    width: 92% !important;              
+    aspect-ratio: 1 / 1 !important;
+    width: 76% !important;              
     margin: .5rem auto 0 !important;
   }
   .card.product .img-wrap img{
