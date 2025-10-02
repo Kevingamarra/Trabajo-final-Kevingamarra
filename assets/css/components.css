@@ -407,14 +407,15 @@ header.navbar .container{
     opacity: 1 !important;          /* por si la animación no corre */
   }
 }
-/* Mobile: mostrar títulos de Perfumería / Cuidados / Maquillaje / Regalos */
+
+/* Mobile: recuperar títulos de secciones principales (ignorar WOW) */
 @media (max-width: 575.98px){
-  #perfumeria .section-title.wow,
-  #cuidados .section-title.wow,
-  #maquillaje .section-title.wow,
-  #regalos .section-title.wow{
+  #perfumeria  h2.section-title,
+  #cuidados    h2.section-title,
+  #maquillaje  h2.section-title,
+  #regalos     h2.section-title{
     visibility: visible !important;
     opacity: 1 !important;
-    animation: none !important; /* por si WOW no dispara en mobile */
+    animation: none !important;
   }
 }
