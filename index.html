@@ -376,6 +376,36 @@
   <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <!-- App -->
-  <script defer src="assets/js/app.js"></script>
+<script defer src="assets/js/app.js"></script>
+
+<script>
+(function(){
+  var isMobile = (window.matchMedia && (
+    matchMedia('(max-width: 575.98px)').matches ||
+    matchMedia('(hover: none) and (pointer: coarse)').matches
+  ));
+  if (!isMobile) return;
+
+  var v = document.querySelector('.hero-video video');
+  if (!v) return;
+
+  v.muted = true; v.setAttribute('muted','');
+  v.autoplay = true; v.setAttribute('autoplay','');
+  v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline','');
+
+  var tryPlay = function(){ v.play().catch(function(){}); };
+
+  if (v.readyState >= 2) { tryPlay(); }
+  else { v.addEventListener('loadeddata', tryPlay, { once:true }); }
+
+  var unlock = function(){ tryPlay(); cleanup(); };
+  var cleanup = function(){
+    window.removeEventListener('touchstart', unlock, { passive:true });
+    window.removeEventListener('click', unlock);
+  };
+  window.addEventListener('touchstart', unlock, { once:true, passive:true });
+  window.addEventListener('click', unlock, { once:true });
+})();
+</script>
 </body>
 </html>

@@ -152,37 +152,6 @@ function applyTitleAnimations(){
     } else {
       window.__wowInstance.sync && window.__wowInstance.sync();
     }
-// --- SOLO MÓVIL: autoplay del HERO ---
-function mobileHeroAutoplay(){
-  const isMobile = (window.matchMedia && (
-    matchMedia('(max-width: 575.98px)').matches ||
-    matchMedia('(hover: none) and (pointer: coarse)').matches
-  ));
-  if (!isMobile) return;
-
-  const v = document.querySelector('.hero-video video');
-  if (!v) return;
-
-  // flags requeridos por iOS para autoplay inline
-  v.muted = true; v.setAttribute('muted','');
-  v.autoplay = true; v.setAttribute('autoplay','');
-  v.playsInline = true; v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline','');
-
-  const tryPlay = () => v.play().catch(()=>{ /* iOS puede bloquear hasta gesto */ });
-
-  if (v.readyState >= 2) { tryPlay(); }
-  else { v.addEventListener('loadeddata', tryPlay, { once:true }); }
-
-  // fallback: primer toque/click
-  const unlock = () => { tryPlay(); cleanup(); };
-  const cleanup = () => {
-    window.removeEventListener('touchstart', unlock, { passive:true });
-    window.removeEventListener('click', unlock);
-  };
-  window.addEventListener('touchstart', unlock, { once:true, passive:true });
-  window.addEventListener('click', unlock, { once:true });
-}
-
 
     // Forzar animación para elementos ya en viewport 
     requestAnimationFrame(()=>{
@@ -551,10 +520,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // Animación en TODOS los títulos (WOW + Animate.css)
   applyTitleAnimations();
 
-  // SOLO móvil: autoplay del HERO (a prueba de fallos)
-  if (typeof mobileHeroAutoplay === 'function') {
-    try { mobileHeroAutoplay(); } catch (_) {}
-  }
 
   // Filtros perfumería (accesibles)
   document.querySelectorAll('#perfumeria [data-subcat]').forEach(btn=>{
