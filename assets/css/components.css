@@ -366,3 +366,20 @@ header.navbar .container{
 @media (min-width: 576px) and (max-width: 767.98px){
   .pay-logos{ max-width: 280px; }
 }
+
+/* Mobile: mantener imagen de producto más chica (3:4) y centrada */
+@media (max-width: 575.98px){
+  .products-row .swiper-slide{ width: 78vw; } 
+
+  .card.product .img-wrap{
+    aspect-ratio: 3 / 4 !important;
+    width: 92% !important;              
+    margin: .5rem auto 0 !important;
+  }
+  .card.product .img-wrap img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+}
