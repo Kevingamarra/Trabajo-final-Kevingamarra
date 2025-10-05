@@ -502,18 +502,35 @@ ${direccionBloque}
 }
 
 function checkoutViaWhatsApp(){
-  if(cart.length === 0){
-    alert('Tu carrito está vacío.');
-    return;
-  }
+  if (cart.length === 0) { alert('Tu carrito está vacío.'); return; }
+
   const result = buildWhatsAppMessageOrError();
-  if (result.error) {
-    alert(result.error);
-    return;
-  }
-  const url = `https://wa.me/${WHATSAPP_PHONE}?text=${result.text}`;
-  window.open(url, '_blank');
+  if (result.error) { alert(result.error); return; }
+
+  const primary  = `https://wa.me/${WHATSAPP_PHONE}?text=${result.text}`;
+  const fallback = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${result.text}`;
+
+  // intento abrir en nueva pestaña; si el bloqueador lo impide, redirijo en la misma
+  const win = window.open(primary, '_blank', 'noopener,noreferrer');
+  if (!win) window.location.href = fallback;
 }
+
+
+// --- Enlazar botón de checkout ---
+const checkoutBtn = document.getElementById('btnCheckout');
+if (checkoutBtn) {
+  checkoutBtn.type = 'button'; 
+  checkoutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    checkoutViaWhatsApp();
+  });
+}
+
+document.getElementById('checkoutForm')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  checkoutViaWhatsApp();
+});
+
 
 /* ---- Inicio ---- */
 document.addEventListener('DOMContentLoaded', ()=>{
